@@ -32,5 +32,7 @@ function shopify_weight_to_ebay_weight(product){
 }
 
 function shopify_condition_to_ebay_condition(product){
-  // We store the condition in the first Shopify optio
+  /* We store the condition in the first Shopify option. Not all of the products are updated this way so
+   * we need to be careful that we check to see if the Shopify option is configured correctly.
+   */
 }
