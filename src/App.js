@@ -74,12 +74,43 @@ class EbayProperty extends Component {
             <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-new"}checked />New
           </label>
         </div> {/*  .btn-group */}
-        <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
+        <EbayPropertyValueField pkey={propertyKey} item={oldEbayItem}></EbayPropertyValueField>
       </div>
       </div>
     </>
     );
  }
+}
+
+class EbayPropertyValueField extends Component{
+  render(){
+    var propertyKey = this.props.pkey;
+    var item = this.props.item;   // the item that we'll pull info from -- leave it to parent to pass us the correct item
+    switch (propertyKey) {
+      case 'title':
+        var pvalue = item.product.title;
+        return(
+          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
+          );
+        break;
+      case 'weight':
+        var pvalue = item.packageWeightAndSize.weight.value;
+        var punit = item.packageWeightAndSize.weight.unit;
+        return(
+          <div className="input-group mb-3">
+            <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
+            <div className="input-group-append">
+              <span className="input-group-text">{punit}</span>
+            </div>
+          </div>
+          );
+        break;
+      default:
+        return(
+          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
+          );
+    }  
+  }
 }
 
 class PropertyCard extends Component {
