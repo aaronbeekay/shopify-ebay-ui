@@ -6,22 +6,7 @@ class App extends Component {
   render() {
     var variable = "butts";
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code>
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn {variable}
-          </a>
-        </header>      
-      </div>
+      <propsAccordion />
     );
   }
 }
@@ -29,8 +14,7 @@ class App extends Component {
 class propsAccordion extends Component {
  render(){
    return(
-     <div id="accordion">
-				{/*  Item titles */}
+     <>
 				<div class="card">
 					<div class="card-header" id="title-header">
 						<h5 class="mb-0">
@@ -68,44 +52,8 @@ class propsAccordion extends Component {
 						</div>
 					</div>
 				</div>
-				
-				{/*  Description */}
-				<div class="card">
-					<div class="card-header" id="description-header">
-						<h5 class="mb-0">
-							<button class="btn btn-link" data-toggle="collapse" data-target="#description-cardbody">Description</button>
-						</h5>
-					</div>
-					<div id="description-cardbody" class="collapse show" aria-labelledby="description-header">
-						<div class="card-body row">
-							{/*  Shopify */}
-							<div class="col-sm-6 col-xs-10">
-								<div class="form-label-group mb-4">
-									<label for="shopify-description" class="mb-3">Shopify description</label> 
-									<textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property"></textarea>
-								</div>
-							</div>
-							
-							{/*  eBay */}
-							<div class="col-sm-6 col-xs-10">
-								<div class="form-label-group">
-									<label for="ebay-description">eBay description</label> 
-									{/*  Old/new data toggle */}
-									<div class="btn-group-toggle btn-group float-right mb-2" role="group" data-toggle="buttons" aria-label="eBay old/new data toggle">
-										<label class="btn btn-sm btn-outline-secondary ebay-toggle">
-											<input type="checkbox" name="ebay-description-toggle" class="ebay-toggle" id="ebay-description-old" />Old
-										</label>
-										<label class="btn btn-sm btn-secondary ebay-toggle">
-											<input type="checkbox" name="ebay-description-toggle" class="ebay-toggle" id="ebay-description-new" checked />New
-										</label>
-									</div> {/*  .btn-group */}
-									<iframe id="ebay-description-iframe" style="width:100%;"></iframe>
-								</div>
-							</div>
-							
-						</div> {/*  .card-body .row */}
-					</div> {/*  #xx-cardbody */}
-				</div> {/*  .card */}
+			
+     <propertyCard key="title" name="Title"></propertyCard>
 				
 				{/*  Weight */}
 				<div class="card">
@@ -251,7 +199,7 @@ class propsAccordion extends Component {
 						</div> {/*  .card-body .row */}
 					</div> {/*  #xx-cardbody */}
 				</div> {/*  .card */}
-	</div>
+       </>
    );
  }
 }
@@ -261,6 +209,7 @@ class propertyCard extends Component {
     var propertyKey = this.props.key;
     var propertyTitle = this.props.name;
     return(
+      <>
         <div class="card">
 					<div class="card-header" id={propertyKey + "-header"}>
 						<h5 class="mb-0">
@@ -298,6 +247,7 @@ class propertyCard extends Component {
 						</div>
 					</div>
 				</div>
+        </>
       );
   }
 }
