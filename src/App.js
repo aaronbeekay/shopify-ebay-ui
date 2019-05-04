@@ -119,7 +119,7 @@ class EbayPropertyValueField extends Component{
       case 'title':
         var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');
         return(
-          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
+          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
           );
       case 'weight':
         return(
@@ -127,7 +127,7 @@ class EbayPropertyValueField extends Component{
           );
       default:
         return(
-          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
+          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" readOnly />
           );
     }  
   }
@@ -147,7 +147,7 @@ class EbayWeightValueField extends Component{
     }
     return(
     <div className="input-group mb-3">
-      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
+      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
       <div className="input-group-append">
         <span className="input-group-text">{punit}</span>
       </div>
