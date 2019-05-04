@@ -55,6 +55,20 @@ class ShopifyProperty extends Component {
 }
 
 class EbayProperty extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      displayNewValue: true
+    }
+    this.handleValueToggleChange = this.handleValueToggleChange.bind(this);
+  }
+  
+  handleValueToggleChange(){
+    this.setState({
+      displayNewValue: !this.state.displayNewValue
+    });
+  }
+  
  render(){
   var propertyKey = this.props.pkey;
   var propertyTitle = this.props.pname;
@@ -68,7 +82,7 @@ class EbayProperty extends Component {
         {/*  Old/new data toggle */}
         <div className="btn-group-toggle btn-group float-right mb-2" role="group" data-toggle="buttons" aria-label="eBay old/new data toggle">
           <label className="btn btn-sm btn-outline-secondary ebay-toggle">
-            <input type="checkbox" name={"ebay-" + propertyKey + "-title-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-old"} />Old
+            <input type="checkbox" name={"ebay-" + propertyKey + "-title-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-old"} checked={!this.state.displayNewValue}/>Old
           </label>
           <label className="btn btn-sm btn-secondary ebay-toggle">
             <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-new"}checked />New
@@ -93,15 +107,8 @@ class EbayPropertyValueField extends Component{
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
           );
       case 'weight':
-        var pvalue = ((typeof item != 'undefined') && ('packageWeightAndSize' in item) && ('weight' in item.product) ? item.packageWeightAndSize.weight.value : '');
-        var punit = ((typeof item != 'undefined') && ('packageWeightAndSize' in item) && ('weight' in item.product) ? item.packageWeightAndSize.weight.unit : '');
         return(
-          <div className="input-group mb-3">
-            <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
-            <div className="input-group-append">
-              <span className="input-group-text">{punit}</span>
-            </div>
-          </div>
+          <EbayWeightValueField pkey={propertyKey} item={item}></EbayWeightValueField>
           );
       default:
         return(
@@ -112,13 +119,25 @@ class EbayPropertyValueField extends Component{
 }
 
 class EbayWeightValueField extends Component{
-  // see if we've been given an item
-  if( !(item in props) || !(packageWeightAndSize in props.item) || !(weig ){
-    var pvalue = '';
-    var punit = '';
-  } else if(
   render(){
-    return();
+    var propertyKey = this.props.pkey;
+
+    // see if we've been given an item
+    if( (typeof this.props.item == 'undefined') || !('packageWeightAndSize' in this.props.item) || !('weight' in this.props.item.packageWeightAndSize) ){
+      var pvalue = '';
+      var punit = '';
+    } else {
+      var pvalue = this.props.item.packageWeightAndSize.weight.value;
+      var punit = this.props.item.packageWeightAndSize.weight.unit;
+    }
+    return(
+    <div className="input-group mb-3">
+      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
+      <div className="input-group-append">
+        <span className="input-group-text">{punit}</span>
+      </div>
+    </div>
+    );
   }
 }
 
