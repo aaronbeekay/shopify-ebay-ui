@@ -54,6 +54,34 @@ class ShopifyProperty extends Component {
  }
 }
 
+class EbayProperty extends Component {
+ render(){
+  var propertyKey = this.props.pkey;
+  var propertyTitle = this.props.pname;
+  var oldEbayItem = this.props.old;      // The item as it currently exists in eBay
+  var newEbayItem = this.props.new;
+  return(
+    <>
+    <div className="col-sm-6 col-xs-10">
+      <div className="form-label-group">
+        <label htmlFor={"ebay-" + propertyKey}>eBay {propertyTitle}</label> 
+        {/*  Old/new data toggle */}
+        <div className="btn-group-toggle btn-group float-right mb-2" role="group" data-toggle="buttons" aria-label="eBay old/new data toggle">
+          <label className="btn btn-sm btn-outline-secondary ebay-toggle">
+            <input type="checkbox" name={"ebay-" + propertyKey + "-title-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-old"} />Old
+          </label>
+          <label className="btn btn-sm btn-secondary ebay-toggle">
+            <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-new"}checked />New
+          </label>
+        </div> {/*  .btn-group */}
+        <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
+      </div>
+      </div>
+    </>
+    );
+ }
+}
+
 class PropertyCard extends Component {
   render(){
     var propertyKey = this.props.pkey;
@@ -74,21 +102,7 @@ class PropertyCard extends Component {
               {/*  Shopify */}				
               <ShopifyProperty pkey={propertyKey} pname={propertyTitle}></ShopifyProperty>
               {/*  eBay */}
-              <div className="col-sm-6 col-xs-10">
-                <div className="form-label-group">
-                  <label htmlFor={"ebay-" + propertyKey}>eBay {propertyTitle}</label> 
-                  {/*  Old/new data toggle */}
-                  <div className="btn-group-toggle btn-group float-right mb-2" role="group" data-toggle="buttons" aria-label="eBay old/new data toggle">
-                    <label className="btn btn-sm btn-outline-secondary ebay-toggle">
-                      <input type="checkbox" name={"ebay-" + propertyKey + "-title-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-old"} />Old
-                    </label>
-                    <label className="btn btn-sm btn-secondary ebay-toggle">
-                      <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-new"}checked />New
-                    </label>
-                  </div> {/*  .btn-group */}
-                  <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
-                </div>
-              </div>
+              <EbayProperty pkey={propertyKey} pname={propertyTitle}></EbayProperty>
             </div>
         </div>
         </div>
