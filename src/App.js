@@ -59,7 +59,7 @@ class EbayProperty extends Component {
   var propertyKey = this.props.pkey;
   var propertyTitle = this.props.pname;
   var oldEbayItem = this.props.old;      // The item as it currently exists in eBay
-  var newEbayItem = this.props.new;
+  var newEbayItem = this.props.new;      // The item as we plan to update it
   return(
     <>
     <div className="col-sm-6 col-xs-10">
