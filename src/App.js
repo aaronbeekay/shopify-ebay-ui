@@ -81,17 +81,32 @@ class EbayProperty extends Component {
         <label htmlFor={"ebay-" + propertyKey}>eBay {propertyTitle}</label> 
         {/*  Old/new data toggle */}
         <div className="btn-group-toggle btn-group float-right mb-2" role="group" data-toggle="buttons" aria-label="eBay old/new data toggle">
-          <label className="btn btn-sm btn-outline-secondary ebay-toggle">
-            <input type="checkbox" name={"ebay-" + propertyKey + "-title-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-old"} checked={!this.state.displayNewValue}/>Old
-          </label>
-          <label className="btn btn-sm btn-secondary ebay-toggle">
-            <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" id={"ebay-" + propertyKey + "-new"}checked />New
-          </label>
+          <EbayPropertyToggle pkey={propertyKey} checked={!this.state.displayNewValue} text="Old"></EbayPropertyToggle>
+          <EbayPropertyToggle pkey={propertyKey} checked={this.state.displayNewValue} text="New"></EbayPropertyToggle>
         </div> {/*  .btn-group */}
-        <EbayPropertyValueField pkey={propertyKey} item={oldEbayItem}></EbayPropertyValueField>
+        <EbayPropertyValueField pkey={propertyKey} item={this.state.displayNewValue ? newEbayItem : oldEbayItem}></EbayPropertyValueField>
       </div>
       </div>
     </>
+    );
+ }
+}
+
+class EbayPropertyToggle extends Component{
+ render(){
+  var propertyKey = this.props.pkey;
+  var checked = this.props.checked;
+  var text = this.props.text;
+  
+  if(checked){
+    var classes = "btn btn-sm btn-secondary active ebay-toggle";
+  } else {
+    var classes = "btn btn-sm btn-outline-secondary ebay-toggle";
+  }
+  return(
+    <label className={classes}>
+      <input type="checkbox" name={"ebay-" + propertyKey + "-toggle"} className="ebay-toggle" checked={checked} onChange={this.handleValueToggleChange} />{text}
+    </label>
     );
  }
 }
