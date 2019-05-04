@@ -88,14 +88,13 @@ class EbayPropertyValueField extends Component{
     var item = this.props.item;   // the item that we'll pull info from -- leave it to parent to pass us the correct item
     switch (propertyKey) {
       case 'title':
-        var pvalue = item.product.title;
+        var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');
         return(
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
           );
-        break;
       case 'weight':
-        var pvalue = item.packageWeightAndSize.weight.value;
-        var punit = item.packageWeightAndSize.weight.unit;
+        var pvalue = ((typeof item != 'undefined') && ('packageWeightAndSize' in item) && ('weight' in item.product) ? item.packageWeightAndSize.weight.value : '');
+        var punit = ((typeof item != 'undefined') && ('packageWeightAndSize' in item) && ('weight' in item.product) ? item.packageWeightAndSize.weight.unit : '');
         return(
           <div className="input-group mb-3">
             <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" />
@@ -104,12 +103,22 @@ class EbayPropertyValueField extends Component{
             </div>
           </div>
           );
-        break;
       default:
         return(
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" />
           );
     }  
+  }
+}
+
+class EbayWeightValueField extends Component{
+  // see if we've been given an item
+  if( !(item in props) || !(packageWeightAndSize in props.item) || !(weig ){
+    var pvalue = '';
+    var punit = '';
+  } else if(
+  render(){
+    return();
   }
 }
 
