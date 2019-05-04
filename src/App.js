@@ -4,6 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
+    var variable = "butts";
     return (
       <div className="App">
         <header className="App-header">
@@ -17,7 +18,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            Learn {variable}
           </a>
         </header>      
       </div>
