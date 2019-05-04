@@ -42,6 +42,7 @@ class ShopifyProperty extends Component {
  render(){
   var propertyKey = this.props.pkey;
   var propertyTitle = this.props.pname;
+
   return(
     <div className="col-sm-6 col-xs-10">
       <div className="form-label-group mb-4">
@@ -57,6 +58,12 @@ class PropertyCard extends Component {
   render(){
     var propertyKey = this.props.pkey;
     var propertyTitle = this.props.pname;
+    // pass in the Shopify attribute as a prop
+    var shopifyProductProperty = this.props.shopify;
+    // pass in the existing eBay attribute as a prop
+    var ebayProductProperty = this.props.ebay;
+    // calculate the destination eBay attribute from a function
+    var updatedEbayProductProperty = null; //TODO calculate
     return(
       <>
         <div className="card">
