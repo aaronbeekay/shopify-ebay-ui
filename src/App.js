@@ -77,6 +77,7 @@ class App extends Component {
   }
   
   render() {
+    console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     return (
       <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
     );
