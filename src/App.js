@@ -66,26 +66,37 @@ const test_ebay_response_old = {
   ]
 };
 var test_ebay_response_new = test_ebay_response_old;
-test_ebay_response_new.product.title = "new title"
+test_ebay_response_new.product.title = "new title";
+test_ebay_response_new.packageWeightAndSize.weight.value = "newWeight";
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      shopifyItem: null,
+      ebayItemOld: test_ebay_response_old,
+      ebayItemNew: test_ebay_response_new
+    }
+  }
+  
   render() {
     return (
-      <PropsAccordion />
+      <PropsAccordion shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} />
     );
   }
 }
 
 class PropsAccordion extends Component {
  render(){
+   var epOld = this.props.ebayItemOld;
    return(
     <>
       <p>is anybody there?</p>			
-      <PropertyCard pkey="title" pname="Title"></PropertyCard>
-      <PropertyCard pkey="weight" pname="Weight"></PropertyCard>
-      <PropertyCard pkey="condition" pname="Condition"></PropertyCard>
-      <PropertyCard pkey="manufacturer" pname="Manufacturer"></PropertyCard>				
-      <PropertyCard pkey="mpn" pname="MPN"></PropertyCard>
+      <PropertyCard pkey="title" pname="Title" ebayItemOld={epOld}></PropertyCard>
+      <PropertyCard pkey="weight" pname="Weight" ebayItemOld={epOld}></PropertyCard>
+      <PropertyCard pkey="condition" pname="Condition" ebayItemOld={epOld}></PropertyCard>
+      <PropertyCard pkey="manufacturer" pname="Manufacturer" ebayItemOld={epOld}></PropertyCard>				
+      <PropertyCard pkey="mpn" pname="MPN" ebayItemOld={epOld}></PropertyCard>
     </>
    );
  }
@@ -237,11 +248,13 @@ class PropertyCard extends Component {
     var propertyKey = this.props.pkey;
     var propertyTitle = this.props.pname;
     // pass in the Shopify attribute as a prop
-    var shopifyProductProperty = this.props.shopify;
+    var sp = this.props.shopifyItem;
     // pass in the existing eBay attribute as a prop
-    var ebayProductProperty = this.props.ebay;
+    var epOld = this.props.ebayItemOld;
     // calculate the destination eBay attribute from a function
-    var updatedEbayProductProperty = null; //TODO calculate
+    var epNew = null; //TODO calculate
+    
+    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product ' + epOld);
     return(
       <>
         <div className="card">
@@ -252,7 +265,7 @@ class PropertyCard extends Component {
               {/*  Shopify */}				
               <ShopifyProperty pkey={propertyKey} pname={propertyTitle}></ShopifyProperty>
               {/*  eBay */}
-              <EbayProperty pkey={propertyKey} pname={propertyTitle}></EbayProperty>
+              <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld}></EbayProperty>
             </div>
         </div>
         </div>
