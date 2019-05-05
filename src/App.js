@@ -216,6 +216,14 @@ class EbayPropertyValueField extends Component{
         return(
           <EbayConditionValueField pkey={propertyKey} item={item}></EbayConditionValueField>
           );
+      case 'manufacturer':
+        return(
+          <EbayManufacturerValueField pkey={propertyKey} item={item}></EbayManufacturerValueField>
+          );
+      case 'mpn':
+        return(
+          <EbayMPNValueField pkey={propertyKey} item={item}></EbayMPNValueField>
+          );
       default:
         return(
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" readOnly />
@@ -268,10 +276,26 @@ class EbayManufacturerValueField extends Component{
     var propertyKey = this.props.pkey;
 
     // see if we've been given an item with the right characteristics
-    if( (typeof this.props.item == 'undefined') || !('product' in this.props.item) || !('){
+    if( (typeof this.props.item == 'undefined') || !('product' in this.props.item) || !('brand' in this.props.item.product) ){
       var pvalue = '';
     } else {
-      var pvalue = this.props.item.condition;    // TODO: this may have to be decoded from a numeric value
+      var pvalue = this.props.item.product.brand;  
+    }
+    return(
+      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
+    );
+  }
+}
+
+class EbayMPNValueField extends Component{
+  render(){
+    var propertyKey = this.props.pkey;
+
+    // see if we've been given an item with the right characteristics
+    if( (typeof this.props.item == 'undefined') || !('product' in this.props.item) || !('mpn' in this.props.item.product) ){
+      var pvalue = '';
+    } else {
+      var pvalue = this.props.item.product.mpn;  
     }
     return(
       <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
