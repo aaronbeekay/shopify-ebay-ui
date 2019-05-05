@@ -126,7 +126,7 @@ class ShopifyProperty extends Component {
     <div className="col-sm-6 col-xs-10">
       <div className="form-label-group mb-4">
         <label htmlFor={"shopify-" + propertyKey} className="mb-3">Shopify {propertyTitle}</label> 
-        <ShopifyProductValueField pkey={propertyKey} item={shopifyItem}></ShopifyProductValueField>
+        <ShopifyPropertyValueField pkey={propertyKey} item={shopifyItem}></ShopifyPropertyValueField>
       </div>
     </div>
     );
@@ -183,23 +183,32 @@ class ShopifyDescriptionValueField extends Component {
       var pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property">{pvalue}</textarea>
       );
  }
 }
 
 class ShopifyWeightValueField extends Component {
+  /* TODO: this currently just looks at the weight of the first defined variant
+   *   If the variants have different weights, that won't show up on this page
+   */
  render(){
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.title; 
+       var pvalue = this.props.item.variants[0].grams; 
     } catch(e) {
       console.log('missing a shopify field value: ' + e);
       var pvalue = '';
     }
+    var punit = 'grams';  // TODO: later we could look up the unit that the value is defined by in shopify, but for now we have a "grams" field that is always accurate
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      <div className="input-group mb-3">
+        <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+        <div className="input-group-append">
+          <span className="input-group-text">{punit}</span>
+        </div>
+      </div>
       );
  }
 }
@@ -209,7 +218,7 @@ class ShopifyConditionValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.title; 
+       var pvalue = this.props.item.variants[0].option1;     // FIXME: This needs to check to make sure the product's Option 1 field is set up correctly
     } catch(e) {
       console.log('missing a shopify field value: ' + e);
       var pvalue = '';
@@ -225,7 +234,23 @@ class ShopifyManufacturerValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.title; 
+       var pvalue = this.props.item.metafields.Manufacturer; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
+ }
+}
+
+class ShopifyMPNValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.metafields.MPN; 
     } catch(e) {
       console.log('missing a shopify field value: ' + e);
       var pvalue = '';
