@@ -72,37 +72,63 @@ class App extends Component {
     super(props);
     this.state = {
       shopifyItem: test_shopify_response.product,
+      shopifyItemChanged: false,
       ebayItemOld: test_ebay_response_old
     }
+  }
+  
+  handeShopifyChange(){
+   this.setState({shopifyItemChanged: true}); 
   }
   
   render() {
     console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     return (
-      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} />
-    );
+      <>
+        {this.state.shopifyItemChanged &&
+          <p>Something has changed</p> }
+      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
+      </>
+        );
   }
 }
 
 class PropsAccordion extends Component {
+  constructor(props){
+    super(props);
+    this.handleShopifyChange = this.handleShopifyChange.bind(this);
+  }
+  
+  handleShopifyChange(){
+    this.props.onShopifyChange();
+  }
+  
  render(){
    var sp = this.props.shopifyItem;
    var epOld = this.props.ebayItemOld;
    return(
-    <>
-      <p>is anybody there?</p>			
-      <PropertyCard pkey="title" pname="Title" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
-      <PropertyCard pkey="description" pname="Description" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
-      <PropertyCard pkey="weight" pname="Weight" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
-      <PropertyCard pkey="condition" pname="Condition" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
-      <PropertyCard pkey="manufacturer" pname="Manufacturer" shopifyItem={sp} ebayItemOld={epOld} ></PropertyCard>				
-      <PropertyCard pkey="mpn" pname="MPN" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
+    <>			
+      <PropertyCard pkey="title" pname="Title" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
+      <PropertyCard pkey="description" pname="Description" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
+      <PropertyCard pkey="weight" pname="Weight" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
+      <PropertyCard pkey="condition" pname="Condition" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
+      <PropertyCard pkey="manufacturer" pname="Manufacturer" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange} ></PropertyCard>				
+      <PropertyCard pkey="mpn" pname="MPN" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
     </>
    );
  }
 }
 
 class PropertyCard extends Component {
+  constructor(props){
+    super(props);
+    this.handleShopifyChange = this.handleShopifyChange.bind(this);
+  }
+  
+  handleShopifyChange(){
+    this.props.onShopifyChange();
+  }
+  
   render(){
     var propertyKey = this.props.pkey;
     var propertyTitle = this.props.pname;
@@ -122,7 +148,7 @@ class PropertyCard extends Component {
           <div className="card-body">
             <div className="row">
               {/*  Shopify */}				
-              <ShopifyProperty pkey={propertyKey} pname={propertyTitle} item={sp}></ShopifyProperty>
+              <ShopifyProperty pkey={propertyKey} pname={propertyTitle} item={sp} onChange={this.handleShopifyChange}></ShopifyProperty>
               {/*  eBay */}
               <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld} new={epNew}></EbayProperty>
             </div>
@@ -167,7 +193,7 @@ class ShopifyProperty extends Component {
     <div className="col-sm-6 col-xs-10">
       <div className="form-label-group mb-4">
         <label htmlFor={"shopify-" + propertyKey} className="mb-3">Shopify {propertyTitle}</label> 
-        <ShopifyPropertyValueField pkey={propertyKey} item={shopifyItem}></ShopifyPropertyValueField>
+        <ShopifyPropertyValueField pkey={propertyKey} item={shopifyItem} onChange={this.handleChange}></ShopifyPropertyValueField>
       </div>
     </div>
     );
@@ -175,22 +201,31 @@ class ShopifyProperty extends Component {
 }
 
 class ShopifyPropertyValueField extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(){
+    this.props.onChange();
+  }
+  
  render() {
   var propertyKey = this.props.pkey;
   var item = this.props.item;
    switch(propertyKey){
      case 'title':
-       return( <ShopifyTitleValueField pkey={propertyKey} item={item}></ShopifyTitleValueField> );
+       return( <ShopifyTitleValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyTitleValueField> );
      case 'description':
-       return( <ShopifyDescriptionValueField pkey={propertyKey} item={item}></ShopifyDescriptionValueField> );
+       return( <ShopifyDescriptionValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyDescriptionValueField> );
      case 'weight':
-       return( <ShopifyWeightValueField pkey={propertyKey} item={item}></ShopifyWeightValueField> );
+       return( <ShopifyWeightValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyWeightValueField> );
      case 'condition':
-       return( <ShopifyConditionValueField pkey={propertyKey} item={item}></ShopifyConditionValueField> );
+       return( <ShopifyConditionValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyConditionValueField> );
      case 'manufacturer':
-       return( <ShopifyManufacturerValueField pkey={propertyKey} item={item}></ShopifyManufacturerValueField> );
+       return( <ShopifyManufacturerValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyManufacturerValueField> );
      case 'mpn':
-       return( <ShopifyMPNValueField pkey={propertyKey} item={item}></ShopifyMPNValueField> );
+       return( <ShopifyMPNValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyMPNValueField> );
      default:
        return null;
    }
@@ -198,6 +233,14 @@ class ShopifyPropertyValueField extends Component {
 }
 
 class ShopifyTitleValueField extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(){
+    this.props.onChange();
+  }
  render(){
     var propertyKey = this.props.pkey;
 
@@ -209,7 +252,7 @@ class ShopifyTitleValueField extends Component {
       var pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
       );
  }
 }
