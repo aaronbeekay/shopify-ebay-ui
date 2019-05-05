@@ -335,7 +335,7 @@ class EbayPropertyValueField extends Component{
   render(){
     var propertyKey = this.props.pkey;
     var item = this.props.item;   // the item that we'll pull info from -- leave it to parent to pass us the correct item
-    console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", 
+    console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", propertyKey, item);
     switch (propertyKey) {
       case 'title':
         var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');

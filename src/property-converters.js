@@ -57,7 +57,7 @@ function shopify_condition_to_ebay_condition(product){
   
   // FIXME: This is totally wrong haha just using for debugging
   try{
-    var ebay_condition = { "condition" : this.product.variants[0].option1 }
+    var ebay_condition = { "condition" : product.variants[0].option1 }
   } catch(e) {
     var ebay_condition = {};
   }
