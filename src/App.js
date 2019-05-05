@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import convert_shopify_item from './property-converters.js';
 
 const test_ebay_response_old = {
   "availability": {
@@ -76,7 +77,7 @@ class App extends Component {
     this.state = {
       shopifyItem: test_shopify_response.product,
       ebayItemOld: test_ebay_response_old,
-      ebayItemNew: null
+      ebayItemNew: convert_shopify_item(test_shopify_response.product)
     }
   }
   

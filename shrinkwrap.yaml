@@ -1,4 +1,5 @@
 dependencies:
+  deepmerge: 3.2.0
   react: 16.8.6
   react-dom: 16.8.6
   react-scripts: 3.0.0
@@ -3122,6 +3123,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
+  /deepmerge/3.2.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-6+LuZGU7QCNUnAJyX8cIrlzoEgggTM6B7mm+znKOX4t5ltluT9KLjN6g61ECMS0LTsLW7yDpNoxhix5FZcrIow==
   /default-gateway/4.2.0:
     dependencies:
       execa: 1.0.0
@@ -10246,6 +10253,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  deepmerge: ^3.2.0
   react: ^16.8.6
   react-dom: ^16.8.6
   react-scripts: ^3.0.0
