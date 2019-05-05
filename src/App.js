@@ -65,9 +65,9 @@ const test_ebay_response_old = {
     "string"
   ]
 };
-var test_ebay_response_new = test_ebay_response_old;
-test_ebay_response_new.product.title = "new title";
-test_ebay_response_new.packageWeightAndSize.weight.value = "newWeight";
+// var test_ebay_response_new = test_ebay_response_old;
+// test_ebay_response_new.product.title = "new title";
+// test_ebay_response_new.packageWeightAndSize.weight.value = "newWeight";
 
 class App extends Component {
   constructor(props){
@@ -75,7 +75,7 @@ class App extends Component {
     this.state = {
       shopifyItem: null,
       ebayItemOld: test_ebay_response_old,
-      ebayItemNew: test_ebay_response_new
+      ebayItemNew: null
     }
   }
   
@@ -212,6 +212,10 @@ class EbayPropertyValueField extends Component{
         return(
           <EbayWeightValueField pkey={propertyKey} item={item}></EbayWeightValueField>
           );
+      case 'condition':
+        return(
+          <EbayConditionValueField pkey={propertyKey} item={item}></EbayConditionValueField>
+          );
       default:
         return(
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" className="form-control ebay-product-property" readOnly />
@@ -239,6 +243,38 @@ class EbayWeightValueField extends Component{
         <span className="input-group-text">{punit}</span>
       </div>
     </div>
+    );
+  }
+}
+
+class EbayConditionValueField extends Component{
+  render(){
+    var propertyKey = this.props.pkey;
+
+    // see if we've been given an item with the right characteristics
+    if( (typeof this.props.item == 'undefined') || !('condition' in this.props.item) ){
+      var pvalue = '';
+    } else {
+      var pvalue = this.props.item.condition;    // TODO: this may have to be decoded from a numeric value
+    }
+    return(
+      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
+    );
+  }
+}
+
+class EbayManufacturerValueField extends Component{
+  render(){
+    var propertyKey = this.props.pkey;
+
+    // see if we've been given an item with the right characteristics
+    if( (typeof this.props.item == 'undefined') || !('product' in this.props.item) || !('){
+      var pvalue = '';
+    } else {
+      var pvalue = this.props.item.condition;    // TODO: this may have to be decoded from a numeric value
+    }
+    return(
+      <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
     );
   }
 }
