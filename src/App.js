@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { convert_shopify_item } from './property-converters.js';
+const merge = require('deepmerge');
 
 const test_ebay_response_old = {
   "availability": {
@@ -73,11 +74,15 @@ class App extends Component {
     this.state = {
       shopifyItem: test_shopify_response.product,
       shopifyItemChanged: false,
+      shopifyItemChanges: {},
       ebayItemOld: test_ebay_response_old
     }
+    this.handleShopifyChange = this.handleShopifyChange.bind(this);
   }
   
-  handeShopifyChange(){
+  handleShopifyChange(e){
+   var newShopifyChanges = merge(this.state.shopifyItemChanges, e);
+    console.log("Shopify item change! Now the Shopify item changes are 
    this.setState({shopifyItemChanged: true}); 
   }
   
@@ -99,8 +104,8 @@ class PropsAccordion extends Component {
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
   }
   
-  handleShopifyChange(){
-    this.props.onShopifyChange();
+  handleShopifyChange(e){
+    this.props.onShopifyChange(e);
   }
   
  render(){
@@ -180,8 +185,8 @@ class ShopifyProperty extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange(){
-    this.props.onChange();
+  handleChange(e){
+    this.props.onChange(e);
   }
   
  render(){
@@ -206,8 +211,9 @@ class ShopifyPropertyValueField extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange(){
-    this.props.onChange();
+  handleChange(e){
+    console.log("ShopifyPropertyValueField got change event e: %o", e);
+    this.props.onChange(e);
   }
   
  render() {
@@ -238,8 +244,11 @@ class ShopifyTitleValueField extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange(){
-    this.props.onChange();
+  handleChange(e){
+    console.log("ShopifyTitleValueField got change event e: %o", e);
+    var newValue = e.target.value;
+    var newShopify = {"item": {"title": newValue}};
+    this.props.onChange(newShopify);
   }
  render(){
     var propertyKey = this.props.pkey;
@@ -258,6 +267,14 @@ class ShopifyTitleValueField extends Component {
 }
 
 class ShopifyDescriptionValueField extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(){
+    this.props.onChange();
+  }
  render(){
     var propertyKey = this.props.pkey;
 
@@ -268,7 +285,7 @@ class ShopifyDescriptionValueField extends Component {
       var pvalue = '';
     }
     return(
-      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property" value={pvalue}></textarea>
+      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property" value={pvalue} onChange={this.handleChange}></textarea>
       );
  }
 }
