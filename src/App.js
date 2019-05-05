@@ -181,7 +181,7 @@ class ShopifyDescriptionValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.title; 
+       var pvalue = this.props.item.body_html; 
     } catch(e) {
       console.log('missing a shopify field value: ' + e);
       var pvalue = '';
