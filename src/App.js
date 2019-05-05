@@ -120,6 +120,7 @@ class ShopifyProperty extends Component {
  render(){
   var propertyKey = this.props.pkey;
   var propertyTitle = this.props.pname;
+  var shopifyItem = this.props.item;
 
   return(
     <div className="col-sm-6 col-xs-10">
@@ -129,6 +130,29 @@ class ShopifyProperty extends Component {
       </div>
     </div>
     );
+ }
+}
+
+class ShopifyPropertyValueField extends Component {
+ render() {
+  var propertyKey = this.props.pkey;
+  var item = this.props.item;
+   switch(propertyKey){
+     case 'title':
+       return( <ShopifyTitleValueField pkey={propertyKey} item={item}></ShopifyTitleValueField> );
+     case 'description':
+       return( <ShopifyDescriptionValueField pkey={propertyKey} item={item}></ShopifyDescriptionValueField> );
+     case 'weight':
+       return( <ShopifyWeightValueField pkey={propertyKey} item={item}></ShopifyWeightValueField> );
+     case 'condition':
+       return( <ShopifyConditionValueField pkey={propertyKey} item={item}></ShopifyConditionValueField> );
+     case 'manufacturer':
+       return( <ShopifyManufacturerValueField pkey={propertyKey} item={item}></ShopifyManufacturerValueField> );
+     case 'mpn':
+       return( <ShopifyMPNValueField pkey={propertyKey} item={item}></ShopifyMPNValueField> );
+     default:
+       return null;
+   }
  }
 }
 
