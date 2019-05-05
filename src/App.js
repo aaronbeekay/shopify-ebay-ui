@@ -82,17 +82,17 @@ class App extends Component {
   
   handleShopifyChange(e){
    var newShopifyChanges = merge(this.state.shopifyItemChanges, e);
-    console.log("Shopify item change! Now the Shopify item changes are 
+    console.log("Shopify item change! Now the Shopify item changes are %o", newShopifyChanges);
    this.setState({shopifyItemChanged: true}); 
   }
   
   render() {
-    console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
+    //console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     return (
       <>
         {this.state.shopifyItemChanged &&
           <p>Something has changed</p> }
-      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
+      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={(this.state.shopifyItemChanged ? this.state.shopifyItem : merge(this.state.shopifyItem, this.state.shopifyItemChanges))} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
       </>
         );
   }
@@ -130,8 +130,9 @@ class PropertyCard extends Component {
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
   }
   
-  handleShopifyChange(){
-    this.props.onShopifyChange();
+  handleShopifyChange(e){
+    console.log("PropertyCard got change event e: %o", e);
+    this.props.onShopifyChange(e);
   }
   
   render(){
@@ -144,7 +145,7 @@ class PropertyCard extends Component {
     // calculate the destination eBay attribute from a function
     var epNew = convert_shopify_item(this.props.shopifyItem); 
     
-    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
+    //console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
     return(
       <>
         <div className="card">
@@ -186,6 +187,7 @@ class ShopifyProperty extends Component {
   }
   
   handleChange(e){
+    console.log("ShopifyProperty got change event e: %o", e);
     this.props.onChange(e);
   }
   
@@ -252,16 +254,16 @@ class ShopifyTitleValueField extends Component {
   }
  render(){
     var propertyKey = this.props.pkey;
-
+    var pvalue = ''
     try {
-       console.log("ShopifyTitleValueField: item title: " + this.props.item.title );
-       var pvalue = this.props.item.title; 
+       //console.log("ShopifyTitleValueField: item title: " + this.props.item.title );
+       pvalue = this.props.item.title; 
     } catch(e) {
-      console.log('ShopifyTitleValueField: missing a shopify field value: ' + e);
-      var pvalue = '';
+      //console.log('ShopifyTitleValueField: missing a shopify field value: ' + e);
+      pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onBlur={this.handleChange} />
       );
  }
 }
@@ -281,11 +283,11 @@ class ShopifyDescriptionValueField extends Component {
     try {
        var pvalue = this.props.item.body_html; 
     } catch(e) {
-      console.log('missing a shopify field value: ' + e);
+      //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
     }
     return(
-      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property" value={pvalue} onChange={this.handleChange}></textarea>
+      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" className="form-control shopify-product-property" value={pvalue} onChange={this.handleChange}></textarea>
       );
  }
 }
@@ -300,7 +302,7 @@ class ShopifyWeightValueField extends Component {
     try {
        var pvalue = this.props.item.variants[0].grams; 
     } catch(e) {
-      console.log('missing a shopify field value: ' + e);
+      //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
     }
     var punit = 'grams';  // TODO: later we could look up the unit that the value is defined by in shopify, but for now we have a "grams" field that is always accurate
@@ -322,7 +324,7 @@ class ShopifyConditionValueField extends Component {
     try {
        var pvalue = this.props.item.variants[0].option1;     // FIXME: This needs to check to make sure the product's Option 1 field is set up correctly
     } catch(e) {
-      console.log('missing a shopify field value: ' + e);
+      //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
     }
     return(
@@ -354,7 +356,7 @@ class ShopifyMPNValueField extends Component {
     try {
        var pvalue = this.props.item.metafields.MPN; 
     } catch(e) {
-      console.log('missing a shopify field value: ' + e);
+      //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
     }
     return(
@@ -433,7 +435,7 @@ class EbayPropertyValueField extends Component{
   render(){
     var propertyKey = this.props.pkey;
     var item = this.props.item;   // the item that we'll pull info from -- leave it to parent to pass us the correct item
-    console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", propertyKey, item);
+    //console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", propertyKey, item);
     switch (propertyKey) {
       case 'title':
         var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');

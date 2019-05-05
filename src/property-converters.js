@@ -6,9 +6,9 @@ function convert_shopify_item( product ){
    convert_shopify_property('weight', product),
    convert_shopify_property('condition', product)
    ];
-  console.log('ebayFields: %o ', ebayFields);
+  //console.log('ebayFields: %o ', ebayFields);
   var merged = merge.all(ebayFields);
-  console.log('merged into: %o', merged);
+  //console.log('merged into: %o', merged);
   return( merged );
 }
 
