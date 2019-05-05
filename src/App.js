@@ -82,7 +82,7 @@ class App extends Component {
   
   render() {
     return (
-      <PropsAccordion shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
+      <PropsAccordion ref={(propsAccordion) => shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
     );
   }
 }
