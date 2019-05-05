@@ -76,14 +76,13 @@ class App extends Component {
     super(props);
     this.state = {
       shopifyItem: test_shopify_response.product,
-      ebayItemOld: test_ebay_response_old,
-      ebayItemNew: convert_shopify_item(test_shopify_response.product)
+      ebayItemOld: test_ebay_response_old
     }
   }
   
   render() {
     return (
-      <PropsAccordion shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} />
+      <PropsAccordion shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
     );
   }
 }
@@ -99,7 +98,7 @@ class PropsAccordion extends Component {
       <PropertyCard pkey="description" pname="Description" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
       <PropertyCard pkey="weight" pname="Weight" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
       <PropertyCard pkey="condition" pname="Condition" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
-      <PropertyCard pkey="manufacturer" pname="Manufacturer" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>				
+      <PropertyCard pkey="manufacturer" pname="Manufacturer" shopifyItem={sp} ebayItemOld={epOld} ></PropertyCard>				
       <PropertyCard pkey="mpn" pname="MPN" shopifyItem={sp} ebayItemOld={epOld}></PropertyCard>
     </>
    );
@@ -336,6 +335,7 @@ class EbayPropertyValueField extends Component{
   render(){
     var propertyKey = this.props.pkey;
     var item = this.props.item;   // the item that we'll pull info from -- leave it to parent to pass us the correct item
+    console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", 
     switch (propertyKey) {
       case 'title':
         var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');
@@ -446,9 +446,9 @@ class PropertyCard extends Component {
     // pass in the existing eBay attribute as a prop
     var epOld = this.props.ebayItemOld;
     // calculate the destination eBay attribute from a function
-    var epNew = null; //TODO calculate
+    var epNew = convert_shopify_item(test_shopify_response.product); 
     
-    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product ' + epOld);
+    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
     return(
       <>
         <div className="card">
@@ -459,7 +459,7 @@ class PropertyCard extends Component {
               {/*  Shopify */}				
               <ShopifyProperty pkey={propertyKey} pname={propertyTitle} item={sp}></ShopifyProperty>
               {/*  eBay */}
-              <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld}></EbayProperty>
+              <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld} new={epNew}></EbayProperty>
             </div>
         </div>
         </div>
