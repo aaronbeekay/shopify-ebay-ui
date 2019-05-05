@@ -126,7 +126,7 @@ class ShopifyProperty extends Component {
     <div className="col-sm-6 col-xs-10">
       <div className="form-label-group mb-4">
         <label htmlFor={"shopify-" + propertyKey} className="mb-3">Shopify {propertyTitle}</label> 
-        <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" className="form-control shopify-product-property" />
+        <ShopifyProductValueField pkey={propertyKey} item={shopifyItem}></ShopifyProductValueField>
       </div>
     </div>
     );
@@ -153,6 +153,86 @@ class ShopifyPropertyValueField extends Component {
      default:
        return null;
    }
+ }
+}
+
+class ShopifyTitleValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.title; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
+ }
+}
+
+class ShopifyDescriptionValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.title; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
+ }
+}
+
+class ShopifyWeightValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.title; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
+ }
+}
+
+class ShopifyConditionValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.title; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
+ }
+}
+
+class ShopifyManufacturerValueField extends Component {
+ render(){
+    var propertyKey = this.props.pkey;
+
+    try {
+       var pvalue = this.props.item.title; 
+    } catch(e) {
+      console.log('missing a shopify field value: ' + e);
+      var pvalue = '';
+    }
+    return(
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      );
  }
 }
 
