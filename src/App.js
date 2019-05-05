@@ -82,17 +82,26 @@ class App extends Component {
   
   handleShopifyChange(e){
    var newShopifyChanges = merge(this.state.shopifyItemChanges, e);
-    console.log("Shopify item change! Now the Shopify item changes are %o", newShopifyChanges);
-   this.setState({shopifyItemChanged: true}); 
+   console.log("Shopify item change! Now the Shopify item changes are %o", newShopifyChanges);
+   this.setState({shopifyItemChanged: true, shopifyItemChanges: newShopifyChanges}); 
   }
   
   render() {
     //console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
+    var shopifyItemToSend;
+    if( !this.state.shopifyItemChanged ){
+      console.log("No item changes, so sending original shopify item");
+      shopifyItemToSend = this.state.shopifyItem;
+    } else {
+      console.log("I see that the shopify item changes are %o", this.state.shopifyItemChanges);
+      shopifyItemToSend = merge(this.state.shopifyItem, this.state.shopifyItemChanges);
+      console.log("The shopify item has been edited, so using merged state %o",shopifyItemToSend);
+    }
     return (
       <>
         {this.state.shopifyItemChanged &&
           <p>Something has changed</p> }
-      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={(this.state.shopifyItemChanged ? this.state.shopifyItem : merge(this.state.shopifyItem, this.state.shopifyItemChanges))} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
+      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={shopifyItemToSend} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
       </>
         );
   }
@@ -263,7 +272,7 @@ class ShopifyTitleValueField extends Component {
       pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onBlur={this.handleChange} />
+      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
       );
  }
 }
