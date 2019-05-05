@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import convert_shopify_item from './property-converters.js';
+import { convert_shopify_item } from './property-converters.js';
 
 const test_ebay_response_old = {
   "availability": {
