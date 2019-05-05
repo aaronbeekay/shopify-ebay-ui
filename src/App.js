@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { convert_shopify_item } from './property-converters.js';
 
 const test_ebay_response_old = {
@@ -67,9 +66,6 @@ const test_ebay_response_old = {
   ]
 };
 const test_shopify_response = {"product":{"admin_graphql_api_id":"gid://shopify/Product/2113031864379","body_html":"<ul>\n<li>\n<dl>\n<dt>Number of Protected Poles:</dt>\n<dd>1</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Arrester Class:</dt>\n<dd>II</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Version:</dt>\n<dd>Plug-in</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Discharge Current (I<sub>max</sub>):</dt>\n<dd>Nominal 20 kA<br>Maximum 40 kA</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Maximum Continuous Operating Voltage (U<sub>c</sub>):</dt>\n<dd>670 V</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Voltage Rating DC:</dt>\n<dd>600 V</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Short Circuit Withstand Icc:</dt>\n<dd>0.3 kA</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Product Name:</dt>\n<dd>Surge Protective Devices</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Suitable For:</dt>\n<dd>To protect the systems against the transient overvoltage (lightning)</dd>\n</dl>\n</li>\n</ul>","created_at":"2019-02-23T16:57:18-05:00","handle":"abb-2ctb803950r0000-ovr-surge-protector-pv-40-600-c","id":2113031864379,"image":{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023079483","alt":null,"created_at":"2019-02-23T16:57:21-05:00","height":1544,"id":7503023079483,"position":1,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_1.jpg?v=1550959041","updated_at":"2019-02-23T16:57:21-05:00","variant_ids":[],"width":1648},"images":[{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023079483","alt":null,"created_at":"2019-02-23T16:57:21-05:00","height":1544,"id":7503023079483,"position":1,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_1.jpg?v=1550959041","updated_at":"2019-02-23T16:57:21-05:00","variant_ids":[],"width":1648},{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023407163","alt":null,"created_at":"2019-02-23T16:57:23-05:00","height":1824,"id":7503023407163,"position":2,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_2.jpg?v=1550959043","updated_at":"2019-02-23T16:57:23-05:00","variant_ids":[],"width":2608}],"options":[{"id":2948214784059,"name":"Condition","position":1,"product_id":2113031864379,"values":["New"]}],"product_type":"","published_at":"2019-02-23T16:55:08-05:00","published_scope":"web","tags":"Industrial","template_suffix":null,"title":"ABB 2CTB803950R0000 OVR Surge Protector PV 40 600 C","updated_at":"2019-04-03T23:36:10-04:00","variants":[{"admin_graphql_api_id":"gid://shopify/ProductVariant/20361958522939","barcode":"","compare_at_price":null,"created_at":"2019-02-23T16:57:18-05:00","fulfillment_service":"manual","grams":454,"id":20361958522939,"image_id":null,"inventory_item_id":20836432773179,"inventory_management":"shopify","inventory_policy":"deny","inventory_quantity":1,"old_inventory_quantity":1,"option1":"New","option2":null,"option3":null,"position":1,"price":"50.00","product_id":2113031864379,"requires_shipping":true,"sku":"","taxable":true,"title":"New","updated_at":"2019-04-03T23:36:10-04:00","weight":1.0,"weight_unit":"lb"}],"vendor":"glitchlab"}};
-// var test_ebay_response_new = test_ebay_response_old;
-// test_ebay_response_new.product.title = "new title";
-// test_ebay_response_new.packageWeightAndSize.weight.value = "newWeight";
 
 class App extends Component {
   constructor(props){
@@ -82,7 +78,7 @@ class App extends Component {
   
   render() {
     return (
-      <PropsAccordion ref={(propsAccordion) => shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
+      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
     );
   }
 }
