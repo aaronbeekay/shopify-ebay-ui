@@ -79,7 +79,7 @@ class App extends Component {
   render() {
     console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     return (
-      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} ebayItemNew={this.state.ebayItemNew} />
+      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={this.state.shopifyItem} ebayItemOld={this.state.ebayItemOld} />
     );
   }
 }
@@ -102,10 +102,42 @@ class PropsAccordion extends Component {
  }
 }
 
+class PropertyCard extends Component {
+  render(){
+    var propertyKey = this.props.pkey;
+    var propertyTitle = this.props.pname;
+    // pass in the Shopify attribute as a prop
+    var sp = this.props.shopifyItem;
+    // pass in the existing eBay attribute as a prop
+    var epOld = this.props.ebayItemOld;
+    // calculate the destination eBay attribute from a function
+    var epNew = convert_shopify_item(this.props.shopifyItem); 
+    
+    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
+    return(
+      <>
+        <div className="card">
+          <PropertyCardHeader pkey={propertyKey} pname={propertyTitle}></PropertyCardHeader>
+          <div id={propertyKey + "-cardbody"} className="collapse show" aria-labelledby={propertyKey + "-header"}>
+          <div className="card-body">
+            <div className="row">
+              {/*  Shopify */}				
+              <ShopifyProperty pkey={propertyKey} pname={propertyTitle} item={sp}></ShopifyProperty>
+              {/*  eBay */}
+              <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld} new={epNew}></EbayProperty>
+            </div>
+        </div>
+        </div>
+        </div>
+      </>
+      );
+  }
+}
+
 class PropertyCardHeader extends Component {
   render() {
     var propertyKey = this.props.pkey;
-    var propertyTitle = this.props.ptitle;
+    var propertyTitle = this.props.pname;
     return (
       <div className="card-header" id={propertyKey + "-header"}>
         <h5 className="mb-0">
@@ -184,7 +216,7 @@ class ShopifyDescriptionValueField extends Component {
       var pvalue = '';
     }
     return(
-      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property">{pvalue}</textarea>
+      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" class="form-control shopify-product-property" value={pvalue}></textarea>
       );
  }
 }
@@ -431,38 +463,6 @@ class EbayMPNValueField extends Component{
     return(
       <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
     );
-  }
-}
-
-class PropertyCard extends Component {
-  render(){
-    var propertyKey = this.props.pkey;
-    var propertyTitle = this.props.pname;
-    // pass in the Shopify attribute as a prop
-    var sp = this.props.shopifyItem;
-    // pass in the existing eBay attribute as a prop
-    var epOld = this.props.ebayItemOld;
-    // calculate the destination eBay attribute from a function
-    var epNew = convert_shopify_item(test_shopify_response.product); 
-    
-    console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
-    return(
-      <>
-        <div className="card">
-          <PropertyCardHeader pkey={propertyKey} pname={propertyTitle}></PropertyCardHeader>
-          <div id={propertyKey + "-cardbody"} className="collapse show" aria-labelledby={propertyKey + "-header"}>
-          <div className="card-body">
-            <div className="row">
-              {/*  Shopify */}				
-              <ShopifyProperty pkey={propertyKey} pname={propertyTitle} item={sp}></ShopifyProperty>
-              {/*  eBay */}
-              <EbayProperty pkey={propertyKey} pname={propertyTitle} old={epOld} new={epNew}></EbayProperty>
-            </div>
-        </div>
-        </div>
-        </div>
-      </>
-      );
   }
 }
 

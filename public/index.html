@@ -112,7 +112,7 @@
         $.ajax({
           type: "GET",
           url: 'https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=' + pid,
-          success: function(data){ console.log("Got data back: %o", data); window.app.setState({"shopifyItem": data})}
+          success: function(data){ console.log("Got data back: %o", data); window.app.setState({"shopifyItem": data.product})}
         });
       }
     </script>
