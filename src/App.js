@@ -149,6 +149,15 @@ class PropertyCardHeader extends Component {
 }
 
 class ShopifyProperty extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(){
+    this.props.onChange();
+  }
+  
  render(){
   var propertyKey = this.props.pkey;
   var propertyTitle = this.props.pname;
