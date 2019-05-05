@@ -258,7 +258,7 @@ class ShopifyTitleValueField extends Component {
   handleChange(e){
     console.log("ShopifyTitleValueField got change event e: %o", e);
     var newValue = e.target.value;
-    var newShopify = {"item": {"title": newValue}};
+    var newShopify = {"title": newValue};
     this.props.onChange(newShopify);
   }
  render(){
@@ -283,8 +283,10 @@ class ShopifyDescriptionValueField extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange(){
-    this.props.onChange();
+  handleChange(e){
+    var newValue = e.target.value;
+    var newShopify = {"body_html": newValue}
+    this.props.onChange(newShopify);
   }
  render(){
     var propertyKey = this.props.pkey;
