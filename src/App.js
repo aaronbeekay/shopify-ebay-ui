@@ -2,80 +2,14 @@ import React, { Component } from 'react';
 import { convert_shopify_item } from './property-converters.js';
 const merge = require('deepmerge');
 
-const test_ebay_response_old = {
-  "availability": {
-    "pickupAtLocationAvailability": [
-      {
-        "availabilityType": "AvailabilityTypeEnum : [IN_STOCK,OUT_OF_STOCK,SHIP_TO_STORE]",
-        "fulfillmentTime": {
-          "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
-          "value": "integer"
-        },
-        "merchantLocationKey": "string",
-        "quantity": "integer"
-      }
-    ],
-    "shipToLocationAvailability": {
-      "quantity": "integer"
-    }
-  },
-  "condition": "ConditionEnum : [NEW,LIKE_NEW,NEW_OTHER,NEW_WITH_DEFECTS,MANUFACTURER_REFURBISHED,SELLER_REFURBISHED,USED_EXCELLENT,USED_VERY_GOOD,USED_GOOD,USED_ACCEPTABLE,FOR_PARTS_OR_NOT_WORKING]",
-  "conditionDescription": "string",
-  "packageWeightAndSize": {
-    "dimensions": {
-      "height": "number",
-      "length": "number",
-      "unit": "LengthUnitOfMeasureEnum : [INCH,FEET,CENTIMETER,METER]",
-      "width": "number"
-    },
-    "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,MOTORBIKES,ONE_WAY_PALLET,PACKAGE_THICK_ENVELOPE,PADDED_BAGS,PARCEL_OR_PADDED_ENVELOPE,ROLL,SMALL_CANADA_POST_BOX,SMALL_CANADA_POST_BUBBLE_MAILER,TOUGH_BAGS,UPS_LETTER,USPS_FLAT_RATE_ENVELOPE,USPS_LARGE_PACK,VERY_LARGE_PACK,WINE_PAK]",
-    "weight": {
-      "unit": "POUND",
-      "value": "number"
-    }
-  },
-  "product": {
-    "aspects": [
-      "string"
-    ],
-    "brand": "string",
-    "description": "string",
-    "imageUrls": [
-      "string"
-    ],
-    "mpn": "string",
-    "subtitle": "string",
-    "title": "string",
-    "isbn": [
-      "string"
-    ],
-    "upc": [
-      "string"
-    ],
-    "ean": [
-      "string"
-    ],
-    "epid": "string"
-  },
-  "sku": "string",
-  "locale": "LocaleEnum : [en_US,en_CA,fr_CA,en_GB,en_AU,en_IN,de_AT,fr_BE,fr_FR,de_DE,it_IT,nl_BE,nl_NL,es_ES,de_CH,fi_FI,zh_HK,hu_HU,en_PH,pl_PL,pt_PT,ru_RU,en_SG,en_IE,en_MY]",
-  "groupIds": [
-    "string"
-  ],
-  "inventoryItemGroupKeys": [
-    "string"
-  ]
-};
-const test_shopify_response = {"product":{"admin_graphql_api_id":"gid://shopify/Product/2113031864379","body_html":"<ul>\n<li>\n<dl>\n<dt>Number of Protected Poles:</dt>\n<dd>1</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Arrester Class:</dt>\n<dd>II</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Version:</dt>\n<dd>Plug-in</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Discharge Current (I<sub>max</sub>):</dt>\n<dd>Nominal 20 kA<br>Maximum 40 kA</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Maximum Continuous Operating Voltage (U<sub>c</sub>):</dt>\n<dd>670 V</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Voltage Rating DC:</dt>\n<dd>600 V</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Short Circuit Withstand Icc:</dt>\n<dd>0.3 kA</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Product Name:</dt>\n<dd>Surge Protective Devices</dd>\n</dl>\n</li>\n<li>\n<dl>\n<dt>Suitable For:</dt>\n<dd>To protect the systems against the transient overvoltage (lightning)</dd>\n</dl>\n</li>\n</ul>","created_at":"2019-02-23T16:57:18-05:00","handle":"abb-2ctb803950r0000-ovr-surge-protector-pv-40-600-c","id":2113031864379,"image":{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023079483","alt":null,"created_at":"2019-02-23T16:57:21-05:00","height":1544,"id":7503023079483,"position":1,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_1.jpg?v=1550959041","updated_at":"2019-02-23T16:57:21-05:00","variant_ids":[],"width":1648},"images":[{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023079483","alt":null,"created_at":"2019-02-23T16:57:21-05:00","height":1544,"id":7503023079483,"position":1,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_1.jpg?v=1550959041","updated_at":"2019-02-23T16:57:21-05:00","variant_ids":[],"width":1648},{"admin_graphql_api_id":"gid://shopify/ProductImage/7503023407163","alt":null,"created_at":"2019-02-23T16:57:23-05:00","height":1824,"id":7503023407163,"position":2,"product_id":2113031864379,"src":"https://cdn.shopify.com/s/files/1/0129/3854/3163/products/ABB_2CTBB803950R0000_2.jpg?v=1550959043","updated_at":"2019-02-23T16:57:23-05:00","variant_ids":[],"width":2608}],"options":[{"id":2948214784059,"name":"Condition","position":1,"product_id":2113031864379,"values":["New"]}],"product_type":"","published_at":"2019-02-23T16:55:08-05:00","published_scope":"web","tags":"Industrial","template_suffix":null,"title":"ABB 2CTB803950R0000 OVR Surge Protector PV 40 600 C","updated_at":"2019-04-03T23:36:10-04:00","variants":[{"admin_graphql_api_id":"gid://shopify/ProductVariant/20361958522939","barcode":"","compare_at_price":null,"created_at":"2019-02-23T16:57:18-05:00","fulfillment_service":"manual","grams":454,"id":20361958522939,"image_id":null,"inventory_item_id":20836432773179,"inventory_management":"shopify","inventory_policy":"deny","inventory_quantity":1,"old_inventory_quantity":1,"option1":"New","option2":null,"option3":null,"position":1,"price":"50.00","product_id":2113031864379,"requires_shipping":true,"sku":"","taxable":true,"title":"New","updated_at":"2019-04-03T23:36:10-04:00","weight":1.0,"weight_unit":"lb"}],"vendor":"glitchlab"}};
-
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      shopifyItem: test_shopify_response.product,
+      shopifyItem: null,
       shopifyItemChanged: false,
       shopifyItemChanges: {},
-      ebayItemOld: test_ebay_response_old
+      ebayItemOld: null
     }
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
   }
@@ -103,6 +37,39 @@ class App extends Component {
           <p>Something has changed</p> }
       <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={shopifyItemToSend} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
       </>
+        );
+  }
+}
+
+class ShopifyUpdateButton extends Component {
+  constructor(props){
+    super(props);
+    this.onUpdateButtonClick = this.onUpdateButtonClick.bind(this);
+  }
+ handleSyncButtonClick(e){
+   this.props.onUpdateButtonClick(e);
+ }
+  
+  render(){
+   var state = this.props.state;
+    
+    if(state==1){    // 1 = no changes
+      return(
+        <div class="input-group-append hidden">
+          <button class="btn btn-outline-info" type="button" id="shopify-update-button" />
+        </div>
+        );
+    } else if(state == 2 ) {   // 2 = changes to be synced
+      return(
+        <div class="input-group-append">
+          <button class="btn btn-outline-info" type="button" id="shopify-update-button" value="Update i />
+        </div>
+        );
+    } else if(state == 3) { // 3 = actively syncing changes
+      return(
+        <div class="input-group-append">
+          <button class="btn btn-outline-info" type="button" id="shopify-update-button" value="Updating..." />
+        </div>
         );
   }
 }
