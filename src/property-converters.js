@@ -29,8 +29,18 @@ function convert_shopify_property(key, product){
 function shopify_title_to_ebay_title(product){
   try{
     return {"product": {"title": product.title}};
-  } catch {
+  } catch(e) {
     return "";
+  }
+}
+
+function shopify_desc_to_ebay_desc(product){
+  try{
+    var shopify_desc = product.body_html;
+    var ebay_html = shopify_desc;    // TODO apply template
+    return {"product": {"description": ebay_html}}
+  } catch(e) {
+    return {"product": {"description": ""}};
   }
 }
 

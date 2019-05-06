@@ -28,11 +28,7 @@ class App extends Component {
   }
   
   handleShopifyUpdateButtonClick(e){
-    $.ajax({
-          type: "POST",
-          url: 'https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=' + pid,
-          success: function(data){ console.log("Got data back: %o", data); this.handle(data.product)}
-        });
+    alert("This button does not work yet.");
   }
   
   render() {
@@ -436,6 +432,10 @@ class EbayPropertyValueField extends Component{
         return(
           <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
           );
+      case 'description':
+        return(
+          <EbayDescriptionValueField pkey={propertyKey} item={item}></EbayDescriptionValueField>
+          );
       case 'weight':
         return(
           <EbayWeightValueField pkey={propertyKey} item={item}></EbayWeightValueField>
@@ -458,6 +458,19 @@ class EbayPropertyValueField extends Component{
           );
     }  
   }
+}
+
+class EbayDescriptionValueField extends Component{
+  render(){
+    try{
+      var ebay_html = this.props.item.body_html;
+    } catch(e) {
+      var ebay_html = '';
+    }
+  return(
+    <iframe id="ebay-description-iframe" style={{width: "100%"}} srcdoc={ebay_html}></iframe>
+  );
+    }
 }
 
 class EbayWeightValueField extends Component{
