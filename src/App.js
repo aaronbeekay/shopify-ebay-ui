@@ -8,23 +8,37 @@ class App extends Component {
     super(props);
     this.state = {
       shopifyItem: null,
-      shopifyItemChanged: false,
+      shopifyItemChanged: shopify_sync_status.noproduct,
       shopifyItemChanges: {},
       ebayItemOld: null
     }
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
+    this.setShopifyItem = this.setShopifyItem.bind(this);
+    this.handleShopifyUpdateButtonClick = this.handleShopifyUpdateButtonClick.bind(this);
+  }
+  
+  setShopifyItem(product){
+    this.setState({shopifyItem: product, shopifyItemChanged: shopify_sync_status.uptodate});
   }
   
   handleShopifyChange(e){
    var newShopifyChanges = merge(this.state.shopifyItemChanges, e);
    console.log("Shopify item change! Now the Shopify item changes are %o", newShopifyChanges);
-   this.setState({shopifyItemChanged: true, shopifyItemChanges: newShopifyChanges}); 
+   this.setState({shopifyItemChanged: shopify_sync_status.changed, shopifyItemChanges: newShopifyChanges}); 
+  }
+  
+  handleShopifyUpdateButtonClick(e){
+    $.ajax({
+          type: "POST",
+          url: 'https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=' + pid,
+          success: function(data){ console.log("Got data back: %o", data); this.handle(data.product)}
+        });
   }
   
   render() {
     //console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     var shopifyItemToSend;
-    if( !this.state.shopifyItemChanged ){
+    if( this.state.shopifyItemChanged == shopify_sync_status.uptodate ){
       console.log("No item changes, so sending original shopify item");
       shopifyItemToSend = this.state.shopifyItem;
     } else {
@@ -34,7 +48,7 @@ class App extends Component {
     }
     return (
       <>
-      <ShopifyUpdateButton state="1" onUpdateButtonClick={this.handleShopifyUpdateButtonClick} />
+      <ShopifyUpdateButton state={this.state.shopifyItemChanged} onUpdateButtonClick={this.handleShopifyUpdateButtonClick} />
       <PropsAccordion 
           ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} 
           shopifyItem={shopifyItemToSend} 
@@ -58,18 +72,20 @@ class ShopifyUpdateButton extends Component {
   render(){
    var state = this.props.state;
     
-    if(state==1){    // 1 = no changes
+    if(state==shopify_sync_status.uptodate){    // 1 = no changes
       return(
         <button class="btn btn-outline-info disabled" type="button" id="shopify-update-button" disabled>Write Shopify changes</button>
         );
-    } else if(state == 2 ) {   // 2 = changes to be synced
+    } else if(state == shopify_sync_status.changed ) {   // 2 = changes to be synced
       return(
         <button class="btn btn-outline-info" type="button" id="shopify-update-button">Write Shopify changes</button>
         );
-    } else if(state == 3) { // 3 = actively syncing changes
+    } else if(state == shopify_sync_status.syncing ) { // 3 = actively syncing changes
       return(
         <button class="btn btn-outline-info" type="button" id="shopify-update-button">Updating...</button>
         );
+    } else {
+      return null;
     }
   }
 }
