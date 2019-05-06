@@ -4,7 +4,8 @@ function convert_shopify_item( product ){
  var ebayFields = [
    convert_shopify_property('title', product),
    convert_shopify_property('weight', product),
-   convert_shopify_property('condition', product)
+   convert_shopify_property('condition', product),
+   convert_shopify_property('description', product)
    ];
   //console.log('ebayFields: %o ', ebayFields);
   var merged = merge.all(ebayFields);
@@ -20,6 +21,8 @@ function convert_shopify_property(key, product){
      return shopify_weight_to_ebay_weight(product);
    case 'condition':
      return shopify_condition_to_ebay_condition(product);
+   case 'description':
+     return shopify_desc_to_ebay_desc(product);
    default:
      return {}
      

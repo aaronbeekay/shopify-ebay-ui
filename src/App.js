@@ -463,7 +463,7 @@ class EbayPropertyValueField extends Component{
 class EbayDescriptionValueField extends Component{
   render(){
     try{
-      var ebay_html = this.props.item.body_html;
+      var ebay_html = this.props.item.product.description;
     } catch(e) {
       var ebay_html = '';
     }

@@ -115,6 +115,16 @@
           success: function(data){ console.log("Got data back: %o", data); window.app.setShopifyItem(data.product)}
         });
       }
+        
+      var ebay_desc_template = null;
+      function load_ebay_template(){
+        $.ajax({
+          url: "/item-template.html",
+          success: function(data){ ebay_desc_template = data; }
+        });
+      }
+      load_ebay_template();
+      
     </script>
     
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
