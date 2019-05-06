@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { convert_shopify_item } from './property-converters.js';
 const merge = require('deepmerge');
+const shopify_sync_status = {'noproduct': 0, 'uptodate': 1, 'changed': 2, 'syncing': 3};
 
 class App extends Component {
   constructor(props){
@@ -33,9 +34,13 @@ class App extends Component {
     }
     return (
       <>
-        {this.state.shopifyItemChanged &&
-          <p>Something has changed</p> }
-      <PropsAccordion ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} shopifyItem={shopifyItemToSend} ebayItemOld={this.state.ebayItemOld} onShopifyChange={this.handleShopifyChange} />
+      <ShopifyUpdateButton state="1" onUpdateButtonClick={this.handleShopifyUpdateButtonClick} />
+      <PropsAccordion 
+          ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} 
+          shopifyItem={shopifyItemToSend} 
+          ebayItemOld={this.state.ebayItemOld} 
+          onShopifyChange={this.handleShopifyChange} 
+        />
       </>
         );
   }
@@ -44,7 +49,7 @@ class App extends Component {
 class ShopifyUpdateButton extends Component {
   constructor(props){
     super(props);
-    this.onUpdateButtonClick = this.onUpdateButtonClick.bind(this);
+    this.handleSyncButtonClick = this.handleSyncButtonClick.bind(this);
   }
  handleSyncButtonClick(e){
    this.props.onUpdateButtonClick(e);
@@ -55,22 +60,17 @@ class ShopifyUpdateButton extends Component {
     
     if(state==1){    // 1 = no changes
       return(
-        <div class="input-group-append hidden">
-          <button class="btn btn-outline-info" type="button" id="shopify-update-button" />
-        </div>
+        <button class="btn btn-outline-info disabled" type="button" id="shopify-update-button" disabled>Write Shopify changes</button>
         );
     } else if(state == 2 ) {   // 2 = changes to be synced
       return(
-        <div class="input-group-append">
-          <button class="btn btn-outline-info" type="button" id="shopify-update-button" value="Update i />
-        </div>
+        <button class="btn btn-outline-info" type="button" id="shopify-update-button">Write Shopify changes</button>
         );
     } else if(state == 3) { // 3 = actively syncing changes
       return(
-        <div class="input-group-append">
-          <button class="btn btn-outline-info" type="button" id="shopify-update-button" value="Updating..." />
-        </div>
+        <button class="btn btn-outline-info" type="button" id="shopify-update-button">Updating...</button>
         );
+    }
   }
 }
 

@@ -27,7 +27,11 @@ function convert_shopify_property(key, product){
 }
 
 function shopify_title_to_ebay_title(product){
-  return {"product": {"title": product.title}};
+  try{
+    return {"product": {"title": product.title}};
+  } catch {
+    return "";
+  }
 }
 
 function shopify_weight_to_ebay_weight(product){
