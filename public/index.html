@@ -125,6 +125,138 @@
       }
       load_ebay_template();
       
+      /* Set the state of the auth badge at the top of the page. */
+      const login_status = {"checking": 1, "ok": 2, "fail": 3};
+      function set_shopify_login_status(state){
+        switch(state){
+          case login_status.checking:
+            // Set the badge to "checking" state
+            $('#shopify-auth-status').removeClass('badge-danger');
+            $('#shopify-auth-status').removeClass('badge-success');
+            $('#shopify-auth-status').addClass('badge-light');
+
+            $('span#shopify-auth-status-ok').attr('hidden', true);
+            $('span#shopify-auth-status-fail').attr('hidden', true);
+            $('span#shopify-auth-status-checking').removeAttr('hidden');
+
+            $('div#shopify-auth-status-spinner').removeAttr('hidden');
+            break;
+          case login_status.ok:
+            // Set the badge to "OK" state
+            $('#shopify-auth-status').removeClass('badge-danger');
+            $('#shopify-auth-status').addClass('badge-success');
+            $('#shopify-auth-status').removeClass('badge-light');
+
+            $('span#shopify-auth-status-ok').removeAttr('hidden');
+            $('span#shopify-auth-status-fail').attr('hidden', true);
+            $('span#shopify-auth-status-checking').attr('hidden', true);
+
+            $('div#shopify-auth-status-spinner').attr('hidden', true);
+            break;
+          case login_status.fail:
+            // Set the badge to the failed state
+            $('#shopify-auth-status').addClass('badge-danger');
+            $('#shopify-auth-status').removeClass('badge-success');
+            $('#shopify-auth-status').removeClass('badge-light');
+
+            $('span#shopify-auth-status-ok').attr('hidden', true);
+            $('span#shopify-auth-status-fail').removeAttr('hidden');
+            $('span#shopify-auth-status-checking').attr('hidden', true);
+
+            $('div#shopify-auth-status-spinner').attr('hidden', true);
+        }
+      }
+      
+      /* Hit the backend Shopify login status endpoint to see if we have good creds. Update the indicator as we go */
+      function check_shopify_auth(){
+        set_shopify_login_status(login_status.checking);
+        $.ajax({
+          type: "GET",
+          url: "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/test-auth",
+          success: function(data){
+            if (data.shopify_auth_success === true){
+              set_shopify_login_status(login_status.ok);
+            } else {
+              set_shopify_login_status(login_status.fail);
+            }
+          }
+        })
+      }
+      
+      /* Hit the backend eBay login status endpoint to see if we have good creds. Update the indicator as we go */
+      function check_ebay_auth(){
+        set_ebay_login_status(login_status.checking);
+        $.ajax({
+          type: "GET",
+          url: "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/test-auth",
+          success: function(data){
+            if (data.ebay_auth_success === true){
+              set_ebay_login_status(login_status.ok);
+            } else {
+              if(data.error == 'ebay_auth_refreshed'){
+                check_ebay_auth();
+              } else if('ebay_consent_url' in data) {
+                $('a#ebay-auth-status-resolve-button').attr('href', data.ebay_consent_url)
+                set_ebay_login_status(login_status.fail);
+              } else {
+                $('a#ebay-auth-status-resolve-button > small').remove()
+                set_ebay_login_status(login_status.fail);
+              }
+            }
+          }
+        })
+      }
+      
+      function set_ebay_login_status(state){
+        switch(state){
+          case login_status.checking:
+            // Set the badge to "checking" state
+            $('#ebay-auth-status').removeClass('badge-danger');
+            $('#ebay-auth-status').removeClass('badge-success');
+            $('#ebay-auth-status').addClass('badge-light');
+            $('#ebay-auth-status').removeAttr('hidden');
+
+            $('span#ebay-auth-status-ok').attr('hidden', true);
+            $('span#ebay-auth-status-fail').attr('hidden', true);
+            $('a#ebay-auth-status-resolve-button').attr('hidden', true);
+            $('span#ebay-auth-status-checking').removeAttr('hidden');
+
+            $('div#ebay-auth-status-spinner').removeAttr('hidden');
+            break;
+          case login_status.ok:
+            // Set the badge to "OK" state
+            $('#ebay-auth-status').removeClass('badge-danger');
+            $('#ebay-auth-status').addClass('badge-success');
+            $('#ebay-auth-status').removeClass('badge-light');
+            $('#ebay-auth-status').removeAttr('hidden');
+
+            $('span#ebay-auth-status-ok').removeAttr('hidden');
+            $('span#ebay-auth-status-fail').attr('hidden', true);
+            $('a#ebay-auth-status-resolve-button').attr('hidden', true);
+            $('span#ebay-auth-status-checking').attr('hidden', true);
+
+            $('div#ebay-auth-status-spinner').attr('hidden', true);
+            break;
+          case login_status.fail:
+            // Set the badge to the failed state
+            $('#ebay-auth-status').addClass('badge-danger');
+            $('#ebay-auth-status').attr('hidden', true);
+            $('#ebay-auth-status').removeClass('badge-success');
+            $('#ebay-auth-status').removeClass('badge-light');
+
+            $('span#ebay-auth-status-ok').attr('hidden', true);
+            $('a#ebay-auth-status-resolve-button').removeAttr('hidden');
+            $('span#ebay-auth-status-checking').attr('hidden', true);
+
+            $('div#ebay-auth-status-spinner').attr('hidden', true);
+        }
+      }
+      
+      $(document).ready(function(){
+        check_ebay_auth();
+        check_shopify_auth();
+      });
+      
     </script>
     
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
