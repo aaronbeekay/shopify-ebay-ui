@@ -16,6 +16,7 @@ class App extends Component {
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
     this.setShopifyItem = this.setShopifyItem.bind(this);
     this.handleShopifyUpdateButtonClick = this.handleShopifyUpdateButtonClick.bind(this);
+    this.handleEbayUpdateButtonClick = this.handleEbayUpdateButtonClick.bind(this);
     this.setEbayItem = this.setEbayItem.bind(this);
   }
   
