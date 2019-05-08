@@ -57,7 +57,7 @@ function shopify_desc_to_ebay_desc(product){
     var ebay_html = mustache.render(ebay_template, fields);
     ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
     
-    var newProduct =  return {"product": {"description": ebay_html}};
+    var newProduct = {"product": {"description": ebay_html}};
     
     if( 'offers' in product && product.offers.length > 0){
     	newProduct.offers = []
@@ -68,7 +68,7 @@ function shopify_desc_to_ebay_desc(product){
     		}
     	}
     }                 
-   
+   return( newProduct );
   } catch(e) {
     return {"product": {"description": ""}};
   }
