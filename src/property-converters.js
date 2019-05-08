@@ -51,13 +51,13 @@ function shopify_title_to_ebay_title(product){
 function shopify_desc_to_ebay_desc(product){
   try{
     var shopify_desc = product.body_html;
-    var ebay_html = shopify_desc;    // TODO apply template
+    var ebay_html = shopify_desc; 
     var fields = {   item_name: product.title,
                      item_description: shopify_desc  };
-    var ebay_html = mustache.render(ebay_template, fields);
-    ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
+    ebay_html = mustache.render(ebay_template, fields);
+    //ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
     
-    var newProduct = {"product": {"description": ebay_html}};
+    var newProduct = {"product": {}};
     
     if( 'offers' in product && product.offers.length > 0){
     	newProduct.offers = []
@@ -67,9 +67,12 @@ function shopify_desc_to_ebay_desc(product){
     			newProduct.offers[i].push( {offerId: offerId, listingDescription: ebay_html} );	// Add the new description to each offer
     		}
     	}
+    } else {
+    	newProduct.product.description = ebay_html
     }                 
    return( newProduct );
   } catch(e) {
+  	console.log("uh oh: ",e);
     return {"product": {"description": ""}};
   }
 }
