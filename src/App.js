@@ -38,16 +38,16 @@ class App extends Component {
   }
   
   handleEbayUpdateButtonClick(e){
-  	if( this.state.ebayItemOld == null ){
+  	var ebay_sku = document.getElementById('ebay-sku').value;
+  	if( this.state.ebayItemOld == null || ebay_sku == ''){
   		alert('no ebay item loaded');
   	} else {
   		var xhr = new XMLHttpRequest();
-  		var ebay_sku = 
   		xhr.addEventListener("load", function(data){alert("updated")}));
-  		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product/" + )
+  		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product/?sku=" + ebay_sku );
+  		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  		xhr.send( JSON.stringify(convert_shopify_item(this.state.ebayItemOld)) );
   	}
-  	
-  	
   }
   
   render() {
