@@ -120,6 +120,10 @@
       function load_ebay_template(){
         $.ajax({
           url: "/item-template.html",
+          xhrFields: {
+			   withCredentials: true
+			},
+			crossDomain: true,
           success: function(data){ ebay_desc_template = data; }
         });
       }
@@ -173,6 +177,10 @@
         $.ajax({
           type: "GET",
           url: "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/test-auth",
+          xhrFields: {
+			   withCredentials: true
+			},
+			crossDomain: true,
           success: function(data){
             if (data.shopify_auth_success === true){
               set_shopify_login_status(login_status.ok);
@@ -189,6 +197,10 @@
         $.ajax({
           type: "GET",
           url: "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/test-auth",
+          xhrFields: {
+			   withCredentials: true
+			},
+			crossDomain: true,
           success: function(data){
             if (data.ebay_auth_success === true){
               set_ebay_login_status(login_status.ok);
@@ -270,6 +282,10 @@
         $.ajax({
           type: "GET",
           url: 'https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=' + ebay_sku,
+          xhrFields: {
+		   withCredentials: true
+		},
+		crossDomain: true,
           success: receive_ebay_item
         });
       }
@@ -281,6 +297,10 @@
           method: "POST",
           url: 'https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product-metafield',
           contentType: "application/json",
+          xhrFields: {
+			   withCredentials: true
+			},
+			crossDomain: true,
           data: body,
           success: callback 
         });
