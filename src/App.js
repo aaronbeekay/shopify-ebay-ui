@@ -23,7 +23,7 @@ class App extends Component {
   }
   
   setEbayItem(product){
-    this.setState({ebayItem: product});
+    this.setState({ebayItemOld: product});
   }
   
   handleShopifyChange(e){
