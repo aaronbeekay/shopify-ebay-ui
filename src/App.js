@@ -43,7 +43,9 @@ class App extends Component {
   		alert('no ebay item loaded');
   	} else {
   		var xhr = new XMLHttpRequest();
-  		xhr.addEventListener("load", function(data){alert("updated")}));
+  		xhr.addEventListener("load", function(data){
+  			alert("updated");
+  			});
   		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product/?sku=" + ebay_sku );
   		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   		xhr.send( JSON.stringify(convert_shopify_item(this.state.ebayItemOld)) );
