@@ -78,6 +78,23 @@ class App extends Component {
   }
 }
 
+class EbayUpdateButton extends Component {
+	constructor(props){
+		super(props);
+		this.handleUpdateButtonClick = this.handleUpdateButtonClick.bind(this);
+	}
+	
+	handleUpdateButtonClick(e){
+		this.props.onUpdateButtonClick(e);
+	}
+	
+	render(){
+		return(
+			<button className="btn btn-outline-info" type="button" id="ebay-update-button" onClick={handleUpdateButtonClick}>Write eBay changes</button>
+		);
+	}
+}
+
 class ShopifyUpdateButton extends Component {
   constructor(props){
     super(props);
@@ -92,15 +109,15 @@ class ShopifyUpdateButton extends Component {
     
     if(state==shopify_sync_status.uptodate){    // 1 = no changes
       return(
-        <button class="btn btn-outline-info disabled" type="button" id="shopify-update-button" disabled>Write Shopify changes</button>
+        <button className="btn btn-outline-info disabled" type="button" id="shopify-update-button" disabled>Write Shopify changes</button>
         );
     } else if(state == shopify_sync_status.changed ) {   // 2 = changes to be synced
       return(
-        <button class="btn btn-outline-info" type="button" id="shopify-update-button">Write Shopify changes</button>
+        <button className="btn btn-outline-info" type="button" id="shopify-update-button">Write Shopify changes</button>
         );
     } else if(state == shopify_sync_status.syncing ) { // 3 = actively syncing changes
       return(
-        <button class="btn btn-outline-info" type="button" id="shopify-update-button">Updating...</button>
+        <button className="btn btn-outline-info" type="button" id="shopify-update-button">Updating...</button>
         );
     } else {
       return null;
