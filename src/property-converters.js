@@ -2,14 +2,6 @@ const merge = require('deepmerge');
 const mustache = require('mustache');
 var XMLHTTPRequest = require("xmlhttprequest").XMLHttpRequest;
 var xhr = new XMLHttpRequest(); 
-var ebay_template;
-
-function receiveEbayTemplate(){
-  ebay_template = this.responseText;
-}
-xhr.addEventListener("load", receiveEbayTemplate);
-xhr.open("GET", "/item-template.html");
-xhr.send();
 
 function convert_shopify_item( product ){
  var ebayFields = [
@@ -54,7 +46,7 @@ function shopify_desc_to_ebay_desc(product){
     var ebay_html = shopify_desc; 
     var fields = {   item_name: product.title,
                      item_description: shopify_desc  };
-    ebay_html = mustache.render(ebay_template, fields);
+    ebay_html = mustache.render(window.item_template, fields);
     //ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
     
     var newProduct = {"product": {}};
