@@ -252,9 +252,106 @@
         }
       }
       
+      function write_ebay_sku_metafield(){
+        var ebay_sku = $('input#ebay-sku').val();
+        var shopify_product_id = $('input#shopify-id').val()
+
+        if( ebay_sku == '' || !isNormalInteger(shopify_product_id) ){
+          return;
+        }
+        set_ebay_sku_link_button_state(link_button_state.link_in_progress);
+        set_metafield(shopify_product_id, 'ebay_sku', ebay_sku, function(data){ 
+          loadShopifyProduct($('input#shopify-id').val());
+          loadEbayProduct($('input#ebay-sku').val());
+        });
+      }
+      
+      function loadEbayProduct( ebay_sku ){
+        $.ajax({
+          type: "GET",
+          url: '/api/ebay/product?sku=' + ebay_sku,
+          success: receive_ebay_item
+        });
+      }
+      
+      /* Set or update a metafield for the Shopify product */
+      function set_metafield(product_id, key, value, callback){
+        body = JSON.stringify({product_id: product_id, key: key, value: value})
+        $.ajax({
+          method: "POST",
+          url: 'https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product-metafield',
+          contentType: "application/json",
+          data: body,
+          success: callback 
+        });
+      }
+      
+      /* Set the state of the eBay SKU "Link" button */
+      const link_button_state = {"disabled": 1, "linked": 2, "link_available": 3, "link_in_progress": 4}
+      function set_ebay_sku_link_button_state(state){
+        b = $('button#ebay-sku-link');						// The button
+        s = b.children('.spinner-border');					// Spinner div
+        t = b.children('#ebay_sku_button_text');			// <span> with text label
+        switch(state){
+          case link_button_state.disabled:
+            b.attr('disabled', true);					// Disable button
+            b.removeClass('btn-outline-success');		// Remove green outline
+            b.addClass('btn-outline-info');				// Restore blue outline
+            t.text('Link');								// Update button text to reflect state
+            s.attr('hidden', true);						// Hide progress spinner
+            break;
+          case link_button_state.linked:
+            b.attr('disabled', true);					// Enable button
+            b.addClass('btn-outline-success');			// Add green outline
+            b.removeClass('btn-outline-info');			// Restore blue outline
+            t.text('Linked');							// Update button text to reflect state
+            s.attr('hidden', true);						// Hide progress spinner
+            break;
+          case link_button_state.link_available:
+            b.removeAttr('disabled');					// Enable button
+            b.removeClass('btn-outline-success');		// Add green outline
+            b.addClass('btn-outline-info');				// Restore blue outline
+            t.text('Link');								// Update button text to reflect state
+            s.attr('hidden', true);						// Hide progress spinner
+            break;
+          case link_button_state.link_in_progress:
+            b.attr('disabled', true);					// Disable button
+            b.removeClass('btn-outline-success');		// Add green outline
+            b.addClass('btn-outline-info');				// Restore blue outline
+            t.text('Link');								// Update button text to reflect state
+            s.removeAttr('hidden');						// Hide progress spinner
+            break;
+
+        }
+      }
+      
+      /* Update status of "link" button to reflect linking status */
+      function update_ebay_sku_link_button(){
+
+        if( $('input#shopify-id').val() != '' && $('input#ebay-sku').val() != '' && $('input#ebay-sku').val() == $('input#shopify-id').val()){
+          // Shopify field and eBay SKU match
+          set_ebay_sku_link_button_state( link_button_state.linked );
+        } else if( $('input#shopify-id').val() != '' && $('input#ebay-sku').val != ''){
+          // Shopify product is loaded, and an eBay SKU is entered, but Shopify SKU field does not match the entered SKU
+          set_ebay_sku_link_button_state( link_button_state.link_available );
+        } else {
+          // No Shopify product entered, or no eBay SKU entered
+          set_ebay_sku_link_button_state( link_button_state.disabled );
+        }
+      }
+      
+      function receive_ebay_item(data){
+        window.app.setEbayItem(data);
+        update_ebay_sku_link_button();
+      }
+      
       $(document).ready(function(){
         check_ebay_auth();
         check_shopify_auth();
+        
+        $('button#ebay-sku-link').click( write_ebay_sku_metafield );
+        $('button#ebay-sku-link').change( loadEbayProduct( $('input#ebay-sku').val()) );
+        update_ebay_sku_link_button();
       });
       
     </script>

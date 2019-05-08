@@ -15,10 +15,15 @@ class App extends Component {
     this.handleShopifyChange = this.handleShopifyChange.bind(this);
     this.setShopifyItem = this.setShopifyItem.bind(this);
     this.handleShopifyUpdateButtonClick = this.handleShopifyUpdateButtonClick.bind(this);
+    this.setEbayItem = this.setEbayItem.bind(this);
   }
   
   setShopifyItem(product){
     this.setState({shopifyItem: product, shopifyItemChanged: shopify_sync_status.uptodate});
+  }
+  
+  setEbayItem(product){
+    this.setState({ebayItem: product});
   }
   
   handleShopifyChange(e){
