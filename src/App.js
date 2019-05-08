@@ -90,7 +90,7 @@ class EbayUpdateButton extends Component {
 	
 	render(){
 		return(
-			<button className="btn btn-outline-info" type="button" id="ebay-update-button" onClick={handleUpdateButtonClick}>Write eBay changes</button>
+			<button className="btn btn-outline-info" type="button" id="ebay-update-button" onClick={this.handleUpdateButtonClick}>Write eBay changes</button>
 		);
 	}
 }
