@@ -1,4 +1,15 @@
 const merge = require('deepmerge');
+const mustache = require('mustache');
+var XMLHTTPRequest = require("xmlhttprequest").XMLHttpRequest;
+var xhr = new XMLHttpRequest(); 
+var ebay_template;
+
+function receiveEbayTemplate(){
+  ebay_template = this.responseText;
+}
+xhr.addEventListener("load", receiveEbayTemplate);
+xhr.open("GET", "https://ebay-sync.slirp.aaronbeekay.info/item-template.html");
+xhr.send();
 
 function convert_shopify_item( product ){
  var ebayFields = [

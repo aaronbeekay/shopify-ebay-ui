@@ -6,7 +6,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.0",
-    "deepmerge": "^3.2.0"
+    "deepmerge": "^3.2.0",
+    "mustache": "^3.0.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

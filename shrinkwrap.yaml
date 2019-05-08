@@ -1,8 +1,10 @@
 dependencies:
   deepmerge: 3.2.0
+  mustache: 3.0.1
   react: 16.8.6
   react-dom: 16.8.6
   react-scripts: 3.0.0
+  xmlhttprequest: 1.8.0
 packages:
   /@babel/code-frame/7.0.0:
     dependencies:
@@ -6411,6 +6413,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-ji6J5enbMyGRHIAkAOu3WdV8nggqviKCEKtXcOqfphZZtQrmHKycfynJ2V7eVPUA4NhJ6V7Wf4TmGbTwKE9B6g==
+  /mustache/3.0.1:
+    dev: false
+    engines:
+      npm: '>=1.4.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-jFI/4UVRsRYdUbuDTKT7KzfOp7FiD5WzYmmwNwXyUVypC0xjoTL78Fqc0jHUPIvvGD+6DQSPHIt1NE7D1ArsqA==
   /mute-stream/0.0.7:
     dev: false
     resolution:
@@ -10184,6 +10193,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-tGkGJkN8XqCod7OT+EvGYK5Z4SfDQGD30zAa58OcnAa0RRWgzUEK72tkXhsX1FZd+rgnhRxFtmO+ihkp8LHSkw==
+  /xmlhttprequest/1.8.0:
+    dev: false
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=
   /xregexp/4.0.0:
     dev: false
     resolution:
@@ -10254,6 +10269,8 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   deepmerge: ^3.2.0
+  mustache: ^3.0.1
   react: ^16.8.6
   react-dom: ^16.8.6
   react-scripts: ^3.0.0
+  xmlhttprequest: ^1.8.0
