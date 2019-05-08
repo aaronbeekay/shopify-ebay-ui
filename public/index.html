@@ -373,7 +373,7 @@
         check_shopify_auth();
         
         $('button#ebay-sku-link').click( write_ebay_sku_metafield );
-        $('input#ebay-sku').change( loadEbayProduct( $('input#ebay-sku').val()) );
+        $('input#ebay-sku').change( function(data){ loadEbayProduct( $('input#ebay-sku').val()) } );
         update_ebay_sku_link_button();
       });
       
