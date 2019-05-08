@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { convert_shopify_item } from './property-converters.js';
 const merge = require('deepmerge');
+var XMLHTTPRequest = require("xmlhttprequest").XMLHttpRequest; 
 const shopify_sync_status = {'noproduct': 0, 'uptodate': 1, 'changed': 2, 'syncing': 3};
 
 class App extends Component {
@@ -36,6 +37,19 @@ class App extends Component {
     alert("This button does not work yet.");
   }
   
+  handleEbayUpdateButtonClick(e){
+  	if( this.state.ebayItemOld == null ){
+  		alert('no ebay item loaded');
+  	} else {
+  		var xhr = new XMLHttpRequest();
+  		var ebay_sku = 
+  		xhr.addEventListener("load", function(data){alert("updated")}));
+  		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product/" + )
+  	}
+  	
+  	
+  }
+  
   render() {
     //console.log("Rendering the whole app! Shopify item is %o", this.state.shopifyItem);
     var shopifyItemToSend;
@@ -50,6 +64,7 @@ class App extends Component {
     return (
       <>
       <ShopifyUpdateButton state={this.state.shopifyItemChanged} onUpdateButtonClick={this.handleShopifyUpdateButtonClick} />
+      <EbayUpdateButton onUpdateButtonClick={this.handleEbayUpdateButtonClick} />
       <PropsAccordion 
           ref={(propsAccordion) => {window.propsAccordion = propsAccordion}} 
           shopifyItem={shopifyItemToSend} 
@@ -433,9 +448,8 @@ class EbayPropertyValueField extends Component{
     //console.log("What's up. I'm EbayPropertyValueField and I was given the key %s. The item I have is %o.", propertyKey, item);
     switch (propertyKey) {
       case 'title':
-        var pvalue = ((typeof item != 'undefined') && ('product' in item) && ('title' in item.product) ? item.product.title : '');
         return(
-          <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
+          <EbayTitleValueField pkey={propertyKey} item={item}></EbayTitleValueField>
           );
       case 'description':
         return(
@@ -463,6 +477,21 @@ class EbayPropertyValueField extends Component{
           );
     }  
   }
+}
+
+class EbayTitleValueField extends Component{
+	render(){
+		var propertyKey = this.props.pkey;
+		try{
+			var ebay_title = this.props.item.product.title;
+		} catch(e) {
+			console.log('uh oh, no ebay title: %o', e);
+			var ebay_title = '';
+		}
+		return(
+			<input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={ebay_title} className="form-control ebay-product-property" readOnly />
+			);
+	}
 }
 
 class EbayDescriptionValueField extends Component{
