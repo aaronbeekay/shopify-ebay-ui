@@ -8,7 +8,7 @@ function receiveEbayTemplate(){
   ebay_template = this.responseText;
 }
 xhr.addEventListener("load", receiveEbayTemplate);
-xhr.open("GET", "https://ebay-sync.slirp.aaronbeekay.info/item-template.html");
+xhr.open("GET", "/item-template.html");
 xhr.send();
 
 function convert_shopify_item( product ){
@@ -52,7 +52,10 @@ function shopify_desc_to_ebay_desc(product){
   try{
     var shopify_desc = product.body_html;
     var ebay_html = shopify_desc;    // TODO apply template
-    return {"product": {"description": ebay_html}}
+    var fields = {   item_name: product.title,
+                     item_description: shopify_desc  };
+                     
+    return {"product": {"description": mustache.render(ebay_template, fields)}};
   } catch(e) {
     return {"product": {"description": ""}};
   }

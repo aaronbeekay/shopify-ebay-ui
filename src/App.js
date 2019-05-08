@@ -468,7 +468,7 @@ class EbayDescriptionValueField extends Component{
       var ebay_html = '';
     }
   return(
-    <iframe id="ebay-description-iframe" style={{width: "100%"}} srcdoc={ebay_html}></iframe>
+    <iframe id="ebay-description-iframe" style={{width: "100%"}} srcDoc={ebay_html}></iframe>
   );
     }
 }
