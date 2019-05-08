@@ -54,8 +54,21 @@ function shopify_desc_to_ebay_desc(product){
     var ebay_html = shopify_desc;    // TODO apply template
     var fields = {   item_name: product.title,
                      item_description: shopify_desc  };
-                     
-    return {"product": {"description": mustache.render(ebay_template, fields)}};
+    var ebay_html = mustache.render(ebay_template, fields);
+    ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
+    
+    var newProduct =  return {"product": {"description": ebay_html}};
+    
+    if( 'offers' in product && product.offers.length > 0){
+    	newProduct.offers = []
+    	for( var i=0; i<product.offers.length; i++){
+    		if('listingDescription' in product.offers[i]){
+    			var offerId = product.offers[i].offerId
+    			newProduct.offers[i].push( {offerId: offerId, listingDescription: ebay_html} );	// Add the new description to each offer
+    		}
+    	}
+    }                 
+   
   } catch(e) {
     return {"product": {"description": ""}};
   }
