@@ -269,7 +269,7 @@
       function loadEbayProduct( ebay_sku ){
         $.ajax({
           type: "GET",
-          url: '/api/ebay/product?sku=' + ebay_sku,
+          url: 'https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=' + ebay_sku,
           success: receive_ebay_item
         });
       }
