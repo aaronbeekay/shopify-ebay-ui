@@ -279,6 +279,9 @@
       }
       
       function loadEbayProduct( ebay_sku ){
+      	if( $('input#ebay-sku').val() == ''){
+      		return();
+      	}
         $.ajax({
           type: "GET",
           url: 'https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=' + ebay_sku,
@@ -370,7 +373,7 @@
         check_shopify_auth();
         
         $('button#ebay-sku-link').click( write_ebay_sku_metafield );
-        $('button#ebay-sku-link').change( loadEbayProduct( $('input#ebay-sku').val()) );
+        $('input#ebay-sku').change( loadEbayProduct( $('input#ebay-sku').val()) );
         update_ebay_sku_link_button();
       });
       
