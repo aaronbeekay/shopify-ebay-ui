@@ -45,7 +45,7 @@ class App extends Component {
   	} else {
   		var xhr = new XMLHttpRequest();
   		xhr.addEventListener("load", function(data){
-  			alert("updated");
+  			alert("Server replied: " + data);
   			});
   		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=" + ebay_sku );
   		xhr.withCredentials = true;
@@ -518,7 +518,11 @@ class EbayTitleValueField extends Component{
 class EbayDescriptionValueField extends Component{
   render(){
     try{
-      var ebay_html = this.props.item.product.description;
+    	if( this.props.item.offers.length > 0 ){
+    		var ebay_html = this.props.item.offers[0].listingDescription;
+    	} else {
+		  	var ebay_html = this.props.item.product.description;
+		}
     } catch(e) {
       var ebay_html = '';
     }
