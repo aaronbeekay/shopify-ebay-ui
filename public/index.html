@@ -115,6 +115,11 @@
           success: function(data){ 
           	console.log("Got data back: %o", data); 
           	window.app.setShopifyItem(data)
+          	
+          	if( 'metafields' in data && 'ebay_sku' in data.metafields){
+          		$('input#ebay-sku').val( data.metafields.ebay_sku );
+          	}
+          	
           	}
         });
       }
