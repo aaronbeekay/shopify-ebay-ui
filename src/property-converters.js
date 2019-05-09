@@ -114,11 +114,10 @@ function shopify_condition_to_ebay_condition(product){
     	default:
     		return( {} )   
     	}
-    return({"Condition": ebay_condition_value});
+    return({"condition": ebay_condition_value});
   } catch(e) {
     var ebay_condition = {};
   }
-  return( ebay_condition );
 }
 
 function shopify_manufacturer_to_ebay_manufacturer(product){
