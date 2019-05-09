@@ -44,9 +44,11 @@ class App extends Component {
   		alert('no ebay item loaded');
   	} else {
   		var xhr = new XMLHttpRequest();
-  		xhr.addEventListener("load", function(data){
-  			alert("Server replied: " + data);
-  			});
+  		xhr.onreadystatechange = function(){
+  			if (xhr.readyState === 4){
+  				alert("Server replied: " + xhr.response);
+  			}
+  		};
   		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=" + ebay_sku );
   		xhr.withCredentials = true;
   		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
