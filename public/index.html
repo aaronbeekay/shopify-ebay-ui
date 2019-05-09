@@ -264,6 +264,12 @@
         }
       }
       
+      /* https://stackoverflow.com/questions/10834796/validate-that-a-string-is-a-positive-integer */
+		function isNormalInteger(str) {
+			var n = Math.floor(Number(str));
+			return n !== Infinity && String(n) === str && n > 0;
+		}
+      
       function write_ebay_sku_metafield(){
         var ebay_sku = $('input#ebay-sku').val();
         var shopify_product_id = $('input#shopify-id').val()
