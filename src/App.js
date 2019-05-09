@@ -52,7 +52,7 @@ class App extends Component {
   		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=" + ebay_sku );
   		xhr.withCredentials = true;
   		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  		xhr.send( JSON.stringify(convert_shopify_item(this.state.shopifyItem)) );
+  		xhr.send( JSON.stringify(convert_shopify_item(this.state.shopifyItem, this.state.ebayItemOld)) );
   	}
   }
   
@@ -174,7 +174,7 @@ class PropertyCard extends Component {
     // pass in the existing eBay attribute as a prop
     var epOld = this.props.ebayItemOld;
     // calculate the destination eBay attribute from a function
-    var epNew = convert_shopify_item(this.props.shopifyItem); 
+    var epNew = convert_shopify_item(this.props.shopifyItem, epOld); 
     
     //console.log('Hi I am the PropertyCard ' + propertyKey + '! I am trying to render myself and I was given the OLD eBay product %o. I was given the NEW eBay product %o.', epOld, epNew);
     return(
@@ -288,7 +288,7 @@ class ShopifyTitleValueField extends Component {
     var pvalue = ''
     try {
        //console.log("ShopifyTitleValueField: item title: " + this.props.item.title );
-       pvalue = this.props.item.title; 
+       pvalue = this.props.item.product.title; 
     } catch(e) {
       //console.log('ShopifyTitleValueField: missing a shopify field value: ' + e);
       pvalue = '';
@@ -314,7 +314,7 @@ class ShopifyDescriptionValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.body_html; 
+       var pvalue = this.props.item.product.body_html; 
     } catch(e) {
       //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
@@ -333,7 +333,7 @@ class ShopifyWeightValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.variants[0].grams; 
+       var pvalue = this.props.item.product.variants[0].grams; 
     } catch(e) {
       //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
@@ -355,7 +355,7 @@ class ShopifyConditionValueField extends Component {
     var propertyKey = this.props.pkey;
 
     try {
-       var pvalue = this.props.item.variants[0].option1;     // FIXME: This needs to check to make sure the product's Option 1 field is set up correctly
+       var pvalue = this.props.item.product.variants[0].option1;     // FIXME: This needs to check to make sure the product's Option 1 field is set up correctly
     } catch(e) {
       //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
