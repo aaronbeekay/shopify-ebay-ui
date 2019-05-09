@@ -102,7 +102,19 @@ function shopify_condition_to_ebay_condition(product){
   
   // FIXME: This is totally wrong haha just using for debugging
   try{
-    var ebay_condition = { "condition" : product.variants[0].option1 }
+    var shopify_condition = product.variants[0].option1
+    var ebay_condition_value;
+    switch(shopify_condition){
+    	case 'New':
+    		ebay_condition_value = 'NEW';
+    		break;
+    	case 'Used':
+    		ebay_condition_value = 'USED_GOOD';
+    		break;
+    	default:
+    		return( {} )   
+    	}
+    return({"Condition": ebay_condition_value});
   } catch(e) {
     var ebay_condition = {};
   }
