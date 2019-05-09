@@ -518,7 +518,7 @@ class EbayTitleValueField extends Component{
 class EbayDescriptionValueField extends Component{
   render(){
     try{
-    	if( this.props.item.offers.length > 0 ){
+    	if( 'offers' in this.props.item && this.props.item.offers.length > 0 ){
     		var ebay_html = this.props.item.offers[0].listingDescription;
     	} else {
 		  	var ebay_html = this.props.item.product.description;
