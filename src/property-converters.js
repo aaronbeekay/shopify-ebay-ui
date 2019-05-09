@@ -4,18 +4,22 @@ var XMLHTTPRequest = require("xmlhttprequest").XMLHttpRequest;
 var xhr = new XMLHttpRequest(); 
 
 function convert_shopify_item( product ){
- var ebayFields = [
-   convert_shopify_property('title', product),
-   convert_shopify_property('weight', product),
-   convert_shopify_property('condition', product),
-   convert_shopify_property('description', product),
-   convert_shopify_property('manufacturer', product),
-   convert_shopify_property('mpn', product)
-   ];
-  //console.log('ebayFields: %o ', ebayFields);
-  var merged = merge.all(ebayFields);
-  //console.log('merged into: %o', merged);
-  return( merged );
+	try{
+		 var ebayFields = [
+		   convert_shopify_property('title', product),
+		   convert_shopify_property('weight', product),
+		   convert_shopify_property('condition', product),
+		   convert_shopify_property('description', product),
+		   convert_shopify_property('manufacturer', product),
+		   convert_shopify_property('mpn', product)
+		   ];
+		  //console.log('ebayFields: %o ', ebayFields);
+		  var merged = merge.all(ebayFields);
+		  //console.log('merged into: %o', merged);
+		  return( merged );
+	} catch(e) {
+		console.log('Converting shopify item failed: ', e);
+	}
 }
 
 function convert_shopify_property(key, product){
