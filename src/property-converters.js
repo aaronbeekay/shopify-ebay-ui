@@ -56,7 +56,7 @@ function shopify_desc_to_ebay_desc(product){
     	for( var i=0; i<product.offers.length; i++){
     		if('listingDescription' in product.offers[i]){
     			var offerId = product.offers[i].offerId
-    			newProduct.offers[i].push( {offerId: offerId, listingDescription: ebay_html} );	// Add the new description to each offer
+    			newProduct.offers.push( {offerId: offerId, listingDescription: ebay_html} );	// Add the new description to each offer
     		}
     	}
     } else {
