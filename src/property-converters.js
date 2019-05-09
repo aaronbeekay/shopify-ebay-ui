@@ -8,7 +8,9 @@ function convert_shopify_item( product ){
    convert_shopify_property('title', product),
    convert_shopify_property('weight', product),
    convert_shopify_property('condition', product),
-   convert_shopify_property('description', product)
+   convert_shopify_property('description', product),
+   convert_shopify_property('manufacturer', product),
+   convert_shopify_property('mpn', product)
    ];
   //console.log('ebayFields: %o ', ebayFields);
   var merged = merge.all(ebayFields);
@@ -26,6 +28,10 @@ function convert_shopify_property(key, product){
      return shopify_condition_to_ebay_condition(product);
    case 'description':
      return shopify_desc_to_ebay_desc(product);
+	case 'manufacturer':
+		return shopify_manufacturer_to_ebay_manufacturer(product);
+	case 'mpn':
+		return shopify_mpn_to_ebay_mpn(product);
    default:
      return {}
      
@@ -101,6 +107,22 @@ function shopify_condition_to_ebay_condition(product){
     var ebay_condition = {};
   }
   return( ebay_condition );
+}
+
+function shopify_manufacturer_to_ebay_manufacturer(product){
+  try{
+    return {"product": {"brand": product.metafields.Manufacturer}};
+  } catch(e) {
+    return {};
+  }
+}
+
+function shopify_mpn_to_ebay_mpn(product){
+  try{
+    return {"product": {"mpn": product.metafields.MPN}};
+  } catch(e) {
+    return {};
+  }
 }
 
 export { convert_shopify_item };

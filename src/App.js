@@ -52,7 +52,7 @@ class App extends Component {
   		xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/ebay/product?sku=" + ebay_sku );
   		xhr.withCredentials = true;
   		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  		xhr.send( JSON.stringify(convert_shopify_item(this.state.ebayItemOld)) );
+  		xhr.send( JSON.stringify(convert_shopify_item(this.state.shopifyItem)) );
   	}
   }
   
