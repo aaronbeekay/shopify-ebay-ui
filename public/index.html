@@ -118,6 +118,7 @@
           	
           	if( 'metafields' in data && 'ebay_sku' in data.metafields){
           		$('input#ebay-sku').val( data.metafields.ebay_sku );
+          		loadEbayProduct( data.metafields.ebay_sku );
           	}
           	
           	}
