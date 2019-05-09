@@ -538,13 +538,13 @@ class EbayWeightValueField extends Component{
   render(){
     var propertyKey = this.props.pkey;
 
-    // see if we've been given an item
-    if( (typeof this.props.item == 'undefined') || !('packageWeightAndSize' in this.props.item) || !('weight' in this.props.item.packageWeightAndSize) ){
+	try{
+		var pvalue = this.props.item.packageWeightAndSize.weight.value;
+		var punit = this.props.item.packageWeightAndSize.weight.unit;
+	} catch(e) {
       var pvalue = '';
       var punit = '';
-    } else {
-      var pvalue = this.props.item.packageWeightAndSize.weight.value;
-      var punit = this.props.item.packageWeightAndSize.weight.unit;
+      console.log("couldn't get ebay weight... ", e);
     }
     return(
     <div className="input-group mb-3">
