@@ -350,6 +350,44 @@ class ShopifyWeightValueField extends Component {
  }
 }
 
+class ShopifyDimensionValueField extends Component{
+  
+  render(){
+    try{
+       var dimX = this.props.item.metafields.dimX;
+       var dimY = this.props.item.metafields.dimY;
+       var dimZ = this.props.item.metafields.dimZ;
+      
+      return(
+        <div class="row">
+          <div class="col-3">
+            <input id="shopify-dimx" name="shopify-dimx" type="text" value={dimX} className="form-control shopify-product-property" onChange={this.handleChange} />
+          </div>
+          <div class="col-3">
+            <input id="shopify-dimy" name="shopify-dimy" type="text" value={dimY} className="form-control shopify-product-property" onChange={this.handleChange} />
+          </div>
+          <div class="col-3">
+            <input id="shopify-dimz" name="shopify-dimz" type="text" value={dimZ} className="form-control shopify-product-property" onChange={this.handleChange} />
+          </div>
+        </div>
+      
+      );
+    } catch(e) {
+      <div class="row">
+          <div class="col-3">
+            <input id="shopify-dimx" name="shopify-dimx" type="text" value={dimX} className="form-control shopify-product-property" readOnly />
+          </div>
+          <div class="col-3">
+            <input id="shopify-dimy" name="shopify-dimy" type="text" value={dimY} className="form-control shopify-product-property" readOnly />
+          </div>
+          <div class="col-3">
+            <input id="shopify-dimz" name="shopify-dimz" type="text" value={dimZ} className="form-control shopify-product-property" readOnly />
+          </div>
+        </div>
+    }
+  }
+}
+
 class ShopifyConditionValueField extends Component {
  render(){
     var propertyKey = this.props.pkey;

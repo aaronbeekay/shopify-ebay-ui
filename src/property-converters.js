@@ -63,6 +63,11 @@ function shopify_desc_to_ebay_desc(shopifyItem, ebayProduct){
     if( shopify_condition === 'Used' ){
         fields.condition = true;
         fields.conditionUsed = true;
+    } else if( shopify_condition === 'New' ){
+        fields.condition = true;
+        fields.conditionNew = true;
+    } else {
+        fields.condition = false;    // don't render the "Condition" section of the template
     }
     
     ebay_html = mustache.render(window.item_template, fields);
