@@ -31,7 +31,9 @@ function convert_shopify_property(key, shopifyItem, ebayProduct){
    case 'condition':
      return shopify_condition_to_ebay_condition(shopifyItem);
    case 'description':
-     return shopify_desc_to_ebay_desc(shopifyItem, ebayProduct);
+     return shopify_desc_to_ebay_desc(shopifyItem);
+   case 'dimensions':
+     return shopify_dimensions_to_ebay_dimensions(shopifyItem, ebayProduct);
 	case 'manufacturer':
 		return shopify_manufacturer_to_ebay_manufacturer(shopifyItem);
 	case 'mpn':
@@ -111,6 +113,12 @@ function shopify_weight_to_ebay_weight(shopifyItem){
     var ebay_weight = {};
   }
   return( ebay_weight );
+}
+
+function shopify_dimensions_to_ebay_dimensions(shopifyItem){
+ // I think the dimensions we've been writing into the dimX/dimY/dimZ metafields are inches...
+  
+  
 }
 
 function shopify_condition_to_ebay_condition(shopifyItem){

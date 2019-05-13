@@ -147,6 +147,7 @@ class PropsAccordion extends Component {
       <PropertyCard pkey="title" pname="Title" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
       <PropertyCard pkey="description" pname="Description" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
       <PropertyCard pkey="weight" pname="Weight" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
+      <PropertyCard pkey="dimensions" pname="Dimensions" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
       <PropertyCard pkey="condition" pname="Condition" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
       <PropertyCard pkey="manufacturer" pname="Manufacturer" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange} ></PropertyCard>				
       <PropertyCard pkey="mpn" pname="MPN" shopifyItem={sp} ebayItemOld={epOld} onShopifyChange={this.handleShopifyChange}></PropertyCard>
@@ -259,6 +260,8 @@ class ShopifyPropertyValueField extends Component {
        return( <ShopifyDescriptionValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyDescriptionValueField> );
      case 'weight':
        return( <ShopifyWeightValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyWeightValueField> );
+     case 'dimensions':
+       return( <ShopifyDimensionValueField item={item} onChange={this.handleChange}></ShopifyDimensionValueField> );
      case 'condition':
        return( <ShopifyConditionValueField pkey={propertyKey} item={item} onChange={this.handleChange}></ShopifyConditionValueField> );
      case 'manufacturer':
@@ -559,6 +562,10 @@ class EbayPropertyValueField extends Component{
         return(
           <EbayWeightValueField pkey={propertyKey} item={item}></EbayWeightValueField>
           );
+      case 'dimensions':
+        return(
+          <EbayDimensionValueField pkey={propertyKey} item={item}></EbayDimensionValueField>
+          );
       case 'condition':
         return(
           <EbayConditionValueField pkey={propertyKey} item={item}></EbayConditionValueField>
@@ -628,6 +635,38 @@ class EbayWeightValueField extends Component{
       <input id={"ebay-" + propertyKey} name={"ebay-" + propertyKey} type="text" value={pvalue} className="form-control ebay-product-property" readOnly />
       <div className="input-group-append">
         <span className="input-group-text">{punit}</span>
+      </div>
+    </div>
+    );
+  }
+}
+
+class EbayDimensionValueField extends Component{
+  render(){
+    var propertyKey = this.props.pkey;
+	try{
+		var dimX = this.props.item.packageWeightAndSize.dimensions.length;
+    var dimY = this.props.item.packageWeightAndSize.dimensions.width;
+    var dimZ = this.props.item.packageWeightAndSize.dimensions.height;
+		//var punit = this.props.item.packageWeightAndSize.dimensions.unit;
+	} catch(e) {
+      var dimX = '';
+      var dimY = '';
+      var dimZ = '';
+      //var punit = '';
+      console.log("couldn't get ebay dimensions... ", e);
+    }
+    return(
+      
+    <div class="row">
+      <div class="col-3">
+        <input id="ebay-dimx" name="ebay-dimx" type="text" value={dimX} className="form-control ebay-product-property" readOnly />
+      </div>
+      <div class="col-3">
+        <input id="ebay-dimy" name="ebay-dimy" type="text" value={dimY} className="form-control ebay-product-property" readOnly />
+      </div>
+      <div class="col-3">
+        <input id="ebay-dimz" name="ebay-dimz" type="text" value={dimZ} className="form-control ebay-product-property" readOnly />
       </div>
     </div>
     );
