@@ -37,7 +37,7 @@ class App extends Component {
   
   handleShopifyUpdateButtonClick(e){
     var shopifyChanges = this.state.shopifyItemChanges;
-    var shopifyId = this.state.shopifyItem.id;
+    var shopifyId = this.state.shopifyItem.product.id;
     this.setState({shopifyItemChanged: shopify_sync_status.syncing});
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
@@ -312,7 +312,12 @@ class ShopifyTitleValueField extends Component {
       pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
+      <input  id={"shopify-" + propertyKey} 
+              name={"shopify-" + propertyKey} 
+              type="text" 
+              value={pvalue} 
+              className="form-control shopify-product-property" 
+              onChange={this.handleChange} />
       );
  }
 }
@@ -325,10 +330,10 @@ class ShopifyDescriptionValueField extends Component {
   
   handleChange(e){
     // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
-    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"product": {"body_html": newValue}},
     //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
     var newValue = e.target.value;
-    var newShopify = {"body_html": newValue}
+    var newShopify = {"product":{"body_html": newValue}}
     this.props.onChange(newShopify);
   }
  render(){
@@ -361,6 +366,19 @@ class ShopifyWeightValueField extends Component {
   /* TODO: this currently just looks at the weight of the first defined variant
    *   If the variants have different weights, that won't show up on this page
    */
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e){
+    // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
+    var newValue = e.target.value;
+    var newShopify = {"product": {variants: [{grams: newValue}]}}
+    this.props.onChange(newShopify);
+  }
  render(){
     var propertyKey = this.props.pkey;
     var readOnly = true;  // leave read-only until there is a product
@@ -374,7 +392,12 @@ class ShopifyWeightValueField extends Component {
     var punit = 'grams';  // TODO: later we could look up the unit that the value is defined by in shopify, but for now we have a "grams" field that is always accurate
     return(
       <div className="input-group mb-3">
-        <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+        <input  id={"shopify-" + propertyKey} 
+                name={"shopify-" + propertyKey} 
+                type="text" 
+                value={pvalue} 
+                className="form-control shopify-product-property" 
+                onChange={this.handleChange}   />
         <div className="input-group-append">
           <span className="input-group-text">{punit}</span>
         </div>
@@ -476,7 +499,10 @@ class ShopifyManufacturerValueField extends Component {
       var pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      <input  id={"shopify-" + propertyKey} 
+              name={"shopify-" + propertyKey} 
+              type="text" 
+              value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
       );
  }
 }
