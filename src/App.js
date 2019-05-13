@@ -306,6 +306,7 @@ class ShopifyDescriptionValueField extends Component {
   }
   
   handleChange(e){
+    // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the 
     var newValue = e.target.value;
     var newShopify = {"body_html": newValue}
     this.props.onChange(newShopify);
