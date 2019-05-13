@@ -32,7 +32,7 @@ function convert_shopify_property(key, shopifyItem, ebayProduct){
    case 'condition':
      return shopify_condition_to_ebay_condition(shopifyItem);
    case 'description':
-     return shopify_desc_to_ebay_desc(shopifyItem);
+     return shopify_desc_to_ebay_desc(shopifyItem, ebayProduct);
    case 'dimensions':
      return shopify_dimensions_to_ebay_dimensions(shopifyItem, ebayProduct);
 	case 'manufacturer':
