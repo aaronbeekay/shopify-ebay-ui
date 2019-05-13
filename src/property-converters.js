@@ -121,21 +121,21 @@ function shopify_dimensions_to_ebay_dimensions(shopifyItem){
   // Arbitrarily defining eBay's "length" attribute as dimX, "width" as dimY, "height" as dimZ.
   var returnVal = {"packageWeightAndSize": {"dimensions": {}}};
   try{
-    var dimX = shopifyItem.metafields.dimX;
+    var dimX = shopifyItem.metafields.product_dim_x;
     returnVal.packageWeightAndSize.dimensions.length = dimX;
   } catch(e) {
     console.log('No DimX metafield in shopify: ', e);
   }
   
   try{
-    var dimY = shopifyItem.metafields.dimY;
+    var dimY = shopifyItem.metafields.product_dim_y;
     returnVal.packageWeightAndSize.dimensions.width = dimY;
   } catch(e) {
     console.log('No DimY metafield in shopify: ', e);
   }
   
   try{
-    var dimZ = shopifyItem.metafields.dimZ;
+    var dimZ = shopifyItem.metafields.product_dim_z;
     returnVal.packageWeightAndSize.dimensions.height = dimZ;
   } catch(e) {
     console.log('No DimZ metafield in shopify: ', e);

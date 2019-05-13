@@ -21,6 +21,7 @@ class App extends Component {
   }
   
   setShopifyItem(product){
+    this.setState({shopifyItem: null, shopifyItemChanged: shopify_sync_status.noproduct});    // dumb, but this fixes a bug where old item's metafield values could stick around if new item does not have them
     this.setState({shopifyItem: product, shopifyItemChanged: shopify_sync_status.uptodate});
   }
   
@@ -35,6 +36,18 @@ class App extends Component {
   }
   
   handleShopifyUpdateButtonClick(e){
+    var shopifyChanges = this.state.shopifyItemChanges;
+    this.setState({shopifyItemChanged: shopify_sync_status.syncing});
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      if (xhr.readyState === 4){
+        // TODO: handle completed sync here
+      }
+    };
+    xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=" + this.state.shopifyItem.id);
+    xhr.withCredentials = true;
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send( JSON.stringify(
     alert("This button does not work yet.");
   }
   
@@ -378,16 +391,16 @@ class ShopifyDimensionValueField extends Component{
     //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
     var newValue = e.target.value;
     var dimensionID = e.target.name; //the `name` attribute of the field, "shopify-dimx"/"shopify-dimy"/"shopify-dimz"
-    var fieldName;  // the metafield name, "dimX"/"dimY"/"dimZ"
+    var fieldName;  // the metafield name, "product_dim_x"/"product_dim_y"/"product_dim_z"
     switch(dimensionID){
       case "shopify-dimx": 
-        fieldName = "dimX";
+        fieldName = "product_dim_x";
         break;
       case "shopify-dimy":
-        fieldName = "dimY";
+        fieldName = "product_dim_y";
         break;
       case "shopify-dimz":
-        fieldName = "dimZ";
+        fieldName = "product_dim_z";
         break;
     }
     var newShopify = {"metafields": { fieldName: newValue}};
@@ -396,9 +409,9 @@ class ShopifyDimensionValueField extends Component{
   
   render(){
     try{
-       var dimX = this.props.item.metafields.dimX;
-       var dimY = this.props.item.metafields.dimY;
-       var dimZ = this.props.item.metafields.dimZ;
+       var dimX = this.props.item.metafields.product_dim_x;
+       var dimY = this.props.item.metafields.product_dim_y;
+       var dimZ = this.props.item.metafields.product_dim_z;
       
       return(
         <div class="row">
@@ -650,12 +663,12 @@ class EbayDimensionValueField extends Component{
 		var dimX = this.props.item.packageWeightAndSize.dimensions.length;
     var dimY = this.props.item.packageWeightAndSize.dimensions.width;
     var dimZ = this.props.item.packageWeightAndSize.dimensions.height;
-		//var punit = this.props.item.packageWeightAndSize.dimensions.unit;
+		var punit = this.props.item.packageWeightAndSize.dimensions.unit;
 	} catch(e) {
       var dimX = '';
       var dimY = '';
       var dimZ = '';
-      //var punit = '';
+      var punit = '';
       console.log("couldn't get ebay dimensions... ", e);
     }
     return(
