@@ -54,8 +54,17 @@ function shopify_desc_to_ebay_desc(shopifyItem, ebayProduct){
   try{
     var shopify_desc = shopifyItem.product.body_html;
     var ebay_html = shopify_desc; 
+    var shopify_condition = shopifyItem.product.variants[0].option1;
+    
     var fields = {   item_name: shopifyItem.product.title,
                      item_description: shopify_desc  };
+    
+    // Choose which condition badge to include in the template
+    if( shopify_condition === 'Used' ){
+        fields.condition = true;
+        fields.conditionUsed = true;
+    }
+    
     ebay_html = mustache.render(window.item_template, fields);
     //ebay_html = ebay_html.replace(/\n+/g, '');					// strip newlines from html for ebay length concerns
     

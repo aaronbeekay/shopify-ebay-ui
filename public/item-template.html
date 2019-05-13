@@ -17,7 +17,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <table class="table">
-                        <caption><p class="text-center">The following is an 'at-a-glance' summary of the item(s) available in this listing.</p><caption>
+                      <caption><p class="text-center">The following is an 'at-a-glance' summary of the item(s) available in this listing.</p></caption>
                         <tbody>
                             <tr>
                                 <th class="text-right">Item:</th>
@@ -25,14 +25,15 @@
                                     {{item_name}}
                                 </td>
                             </tr>
+                        {{#condition}}
                             <tr>
                                 <th class="text-right">Condition:</th>
                                 <td>
-                                    <span class="label label-success">New</span>
-                                    <span class="label label-primary">Pre-Owned</span>
-                                    <span class="label label-warning">For Parts</span>
+                                    {{#condition-new}}<span class="label label-success">New</span>{{/condition-new}}
+                                    {{#condition-used}}<span class="label label-primary">Used</span>{{/condition-used}}
                                 </td>
                             </tr>
+                        {{/condition}}
                         </tbody>
                     </table>
                 </div>
