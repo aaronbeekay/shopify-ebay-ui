@@ -9,6 +9,7 @@ function convert_shopify_item( shopifyItem, ebayProduct ){
 		   convert_shopify_property('title', shopifyItem, ebayProduct),
 		   convert_shopify_property('weight', shopifyItem, ebayProduct),
 		   convert_shopify_property('condition', shopifyItem, ebayProduct),
+       convert_shopify_property('dimensions', shopifyItem, ebayProduct),
 		   convert_shopify_property('description', shopifyItem, ebayProduct),
 		   convert_shopify_property('manufacturer', shopifyItem, ebayProduct),
 		   convert_shopify_property('mpn', shopifyItem, ebayProduct)
@@ -117,7 +118,37 @@ function shopify_weight_to_ebay_weight(shopifyItem){
 
 function shopify_dimensions_to_ebay_dimensions(shopifyItem){
  // I think the dimensions we've been writing into the dimX/dimY/dimZ metafields are inches...
+  // Arbitrarily defining eBay's "length" attribute as dimX, "width" as dimY, "height" as dimZ.
+  var returnVal = {"packageWeightAndSize": {"dimensions": {}}};
+  try{
+    var dimX = shopifyItem.metafields.dimX;
+    returnVal.packageWeightAndSize.dimensions.length = dimX;
+  } catch(e) {
+    console.log('No DimX metafield in shopify: ', e);
+  }
   
+  try{
+    var dimY = shopifyItem.metafields.dimY;
+    returnVal.packageWeightAndSize.dimensions.width = dimY;
+  } catch(e) {
+    console.log('No DimY metafield in shopify: ', e);
+  }
+  
+  try{
+    var dimZ = shopifyItem.metafields.dimZ;
+    returnVal.packageWeightAndSize.dimensions.height = dimZ;
+  } catch(e) {
+    console.log('No DimZ metafield in shopify: ', e);
+  }
+  
+  // If we have captured any of the dimensions, then set the unit appropriately; otherwise, leave it out
+  if( returnVal.packageWeightAndSize.dimensions.length > 0 ){
+    returnVal.packageWeightAndSize.dimensions.unit = "INCH";
+  }
+  
+  return(
+    returnVal
+    );
   
 }
 
@@ -126,7 +157,6 @@ function shopify_condition_to_ebay_condition(shopifyItem){
    * we need to be careful that we check to see if the Shopify option is configured correctly.
    */
   
-  // FIXME: This is totally wrong haha just using for debugging
   try{
     var shopify_condition = shopifyItem.product.variants[0].option1
     var ebay_condition_value;

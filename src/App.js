@@ -415,6 +415,7 @@ class ShopifyDimensionValueField extends Component{
       
       );
     } catch(e) {
+      return(
       <div class="row">
           <div class="col-3">
             <input id="shopify-dimx" name="shopify-dimx" type="text" value={dimX} className="form-control shopify-product-property" readOnly />
@@ -426,6 +427,7 @@ class ShopifyDimensionValueField extends Component{
             <input id="shopify-dimz" name="shopify-dimz" type="text" value={dimZ} className="form-control shopify-product-property" readOnly />
           </div>
         </div>
+      );
     }
   }
 }
@@ -660,13 +662,28 @@ class EbayDimensionValueField extends Component{
       
     <div class="row">
       <div class="col-3">
-        <input id="ebay-dimx" name="ebay-dimx" type="text" value={dimX} className="form-control ebay-product-property" readOnly />
+        <div className="input-group mb-3">
+          <input id="ebay-dimx" name="ebay-dimx" type="text" value={dimX} className="form-control ebay-product-property" readOnly />
+          <div className="input-group-append">
+            <span className="input-group-text">{punit}</span>
+          </div>
+        </div>
       </div>
       <div class="col-3">
-        <input id="ebay-dimy" name="ebay-dimy" type="text" value={dimY} className="form-control ebay-product-property" readOnly />
+        <div className="input-group mb-3">
+          <input id="ebay-dimy" name="ebay-dimy" type="text" value={dimY} className="form-control ebay-product-property" readOnly />
+        <div className="input-group-append">
+            <span className="input-group-text">{punit}</span>
+          </div>
+        </div>
       </div>
       <div class="col-3">
-        <input id="ebay-dimz" name="ebay-dimz" type="text" value={dimZ} className="form-control ebay-product-property" readOnly />
+        <div className="input-group mb-3">
+          <input id="ebay-dimz" name="ebay-dimz" type="text" value={dimZ} className="form-control ebay-product-property" readOnly />
+          <div className="input-group-append">
+            <span className="input-group-text">{punit}</span>
+          </div>
+        </div>
       </div>
     </div>
     );
