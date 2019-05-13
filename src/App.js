@@ -307,22 +307,33 @@ class ShopifyDescriptionValueField extends Component {
   
   handleChange(e){
     // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
-    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html"
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
     var newValue = e.target.value;
     var newShopify = {"body_html": newValue}
     this.props.onChange(newShopify);
   }
  render(){
     var propertyKey = this.props.pkey;
+    var readOnly = true;    // leave the field read-only until we load a product
 
     try {
        var pvalue = this.props.item.product.body_html; 
     } catch(e) {
       //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
+      readOnly = true;
     }
     return(
-      <textarea id="shopify-description" name="shopify-description" type="textarea" rows="8" className="form-control shopify-product-property" value={pvalue} onChange={this.handleChange}></textarea>
+      <textarea id="shopify-description" 
+                name="shopify-description" 
+                type="textarea" 
+                rows="8" 
+                className="form-control shopify-product-property" 
+                value={pvalue} 
+                onChange={this.handleChange} 
+                readOnly={readOnly}>    
+      </textarea>
       );
  }
 }
@@ -353,6 +364,22 @@ class ShopifyWeightValueField extends Component {
 }
 
 class ShopifyDimensionValueField extends Component{
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e){
+    // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
+    var newValue = e.target.value;
+    var dimensionID = e.target.name; //the `name` attribute of the field, "shopify-dimx"/"shopify-dimy"/"shopify-dimz"
+    var fieldName = switch(dimensionID){case "shopify-dimx": dimension
+    
+    var newShopify = {"metafields": { newValue}};
+    this.props.onChange(newShopify);
+  }
   
   render(){
     try{
