@@ -37,18 +37,20 @@ class App extends Component {
   
   handleShopifyUpdateButtonClick(e){
     var shopifyChanges = this.state.shopifyItemChanges;
+    var shopifyId = this.state.shopifyItem.id;
     this.setState({shopifyItemChanged: shopify_sync_status.syncing});
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
       if (xhr.readyState === 4){
-        // TODO: handle completed sync here
+        console.log("Server reply to Shopify update: " + xhr.response);
+        this.setState({shopifyItemChanges: {}, shopifyItemChanged: shopify_sync_status.uptodate});
+        // TODO: reload product!
       }
     };
-    xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=" + this.state.shopifyItem.id);
+    xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=" + shopifyId );
     xhr.withCredentials = true;
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send( JSON.stringify(
-    alert("This button does not work yet.");
+    xhr.send( JSON.stringify( shopifyChanges ) );
   }
   
   handleEbayUpdateButtonClick(e){
