@@ -430,7 +430,8 @@ class ShopifyDimensionValueField extends Component{
         fieldName = "product_dim_z";
         break;
     }
-    var newShopify = {"metafields": { fieldName: newValue}};
+    var newShopify = {"metafields": {}};
+    newShopify.metafields[fieldName] = newValue;
     this.props.onChange(newShopify);
   }
   
@@ -489,6 +490,19 @@ class ShopifyConditionValueField extends Component {
 }
 
 class ShopifyManufacturerValueField extends Component {
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e){
+    // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
+    var newValue = e.target.value;
+    var newShopify = {"metafields": {"Manufacturer": newValue}};
+    this.props.onChange(newShopify);
+  }
  render(){
     var propertyKey = this.props.pkey;
 
@@ -502,12 +516,27 @@ class ShopifyManufacturerValueField extends Component {
       <input  id={"shopify-" + propertyKey} 
               name={"shopify-" + propertyKey} 
               type="text" 
-              value={pvalue} className="form-control shopify-product-property" onChange={this.handleChange} />
+              value={pvalue} 
+              className="form-control shopify-product-property" 
+              onChange={this.handleChange} />
       );
  }
 }
 
 class ShopifyMPNValueField extends Component {
+constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e){
+    // We expect to be passed a function to our "onChange" prop. When the user makes a change to the Shopify field, create an object with the
+    //   changed fields in the appropriate place in the object hierarchy (e.g., when the description HTML is changed, return {"body_html": newValue},
+    //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
+    var newValue = e.target.value;
+    var newShopify = {"metafields": {"MPN": newValue}};
+    this.props.onChange(newShopify);
+  }
  render(){
     var propertyKey = this.props.pkey;
 
@@ -518,7 +547,12 @@ class ShopifyMPNValueField extends Component {
       var pvalue = '';
     }
     return(
-      <input id={"shopify-" + propertyKey} name={"shopify-" + propertyKey} type="text" value={pvalue} className="form-control shopify-product-property" readOnly />
+      <input  id={"shopify-" + propertyKey} 
+              name={"shopify-" + propertyKey} 
+              type="text" 
+              value={pvalue} 
+              className="form-control shopify-product-property" 
+              onChange={this.handleChange}   />
       );
  }
 }
