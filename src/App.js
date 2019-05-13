@@ -298,7 +298,7 @@ class ShopifyTitleValueField extends Component {
   handleChange(e){
     console.log("ShopifyTitleValueField got change event e: %o", e);
     var newValue = e.target.value;
-    var newShopify = {"title": newValue};
+    var newShopify = {"product":{"title": newValue}};
     this.props.onChange(newShopify);
   }
  render(){
@@ -337,6 +337,7 @@ class ShopifyDescriptionValueField extends Component {
 
     try {
        var pvalue = this.props.item.product.body_html; 
+       readOnly = false;
     } catch(e) {
       //console.log('missing a shopify field value: ' + e);
       var pvalue = '';
@@ -362,6 +363,7 @@ class ShopifyWeightValueField extends Component {
    */
  render(){
     var propertyKey = this.props.pkey;
+    var readOnly = true;  // leave read-only until there is a product
 
     try {
        var pvalue = this.props.item.product.variants[0].grams; 
@@ -416,14 +418,14 @@ class ShopifyDimensionValueField extends Component{
        var dimZ = this.props.item.metafields.product_dim_z;
       
       return(
-        <div class="row">
-          <div class="col-3">
+        <div className="row">
+          <div className="col-3">
             <input id="shopify-dimx" name="shopify-dimx" type="text" value={dimX} className="form-control shopify-product-property" onChange={this.handleChange} />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <input id="shopify-dimy" name="shopify-dimy" type="text" value={dimY} className="form-control shopify-product-property" onChange={this.handleChange} />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <input id="shopify-dimz" name="shopify-dimz" type="text" value={dimZ} className="form-control shopify-product-property" onChange={this.handleChange} />
           </div>
         </div>
@@ -431,14 +433,14 @@ class ShopifyDimensionValueField extends Component{
       );
     } catch(e) {
       return(
-      <div class="row">
-          <div class="col-3">
+      <div className="row">
+          <div className="col-3">
             <input id="shopify-dimx" name="shopify-dimx" type="text" value={dimX} className="form-control shopify-product-property" readOnly />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <input id="shopify-dimy" name="shopify-dimy" type="text" value={dimY} className="form-control shopify-product-property" readOnly />
           </div>
-          <div class="col-3">
+          <div className="col-3">
             <input id="shopify-dimz" name="shopify-dimz" type="text" value={dimZ} className="form-control shopify-product-property" readOnly />
           </div>
         </div>
@@ -675,8 +677,8 @@ class EbayDimensionValueField extends Component{
     }
     return(
       
-    <div class="row">
-      <div class="col-3">
+    <div className="row">
+      <div className="col-3">
         <div className="input-group mb-3">
           <input id="ebay-dimx" name="ebay-dimx" type="text" value={dimX} className="form-control ebay-product-property" readOnly />
           <div className="input-group-append">
@@ -684,7 +686,7 @@ class EbayDimensionValueField extends Component{
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div className="col-3">
         <div className="input-group mb-3">
           <input id="ebay-dimy" name="ebay-dimy" type="text" value={dimY} className="form-control ebay-product-property" readOnly />
         <div className="input-group-append">
@@ -692,7 +694,7 @@ class EbayDimensionValueField extends Component{
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div className="col-3">
         <div className="input-group mb-3">
           <input id="ebay-dimz" name="ebay-dimz" type="text" value={dimZ} className="form-control ebay-product-property" readOnly />
           <div className="input-group-append">
