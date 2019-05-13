@@ -375,9 +375,19 @@ class ShopifyDimensionValueField extends Component{
     //   or when a metafield is changed, return {"metafields":{"my_metafield": newValue}}.
     var newValue = e.target.value;
     var dimensionID = e.target.name; //the `name` attribute of the field, "shopify-dimx"/"shopify-dimy"/"shopify-dimz"
-    var fieldName = switch(dimensionID){case "shopify-dimx": dimension
-    
-    var newShopify = {"metafields": { newValue}};
+    var fieldName;  // the metafield name, "dimX"/"dimY"/"dimZ"
+    switch(dimensionID){
+      case "shopify-dimx": 
+        fieldName = "dimX";
+        break;
+      case "shopify-dimy":
+        fieldName = "dimY";
+        break;
+      case "shopify-dimz":
+        fieldName = "dimZ";
+        break;
+    }
+    var newShopify = {"metafields": { fieldName: newValue}};
     this.props.onChange(newShopify);
   }
   
