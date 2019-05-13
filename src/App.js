@@ -46,7 +46,7 @@ class App extends Component {
         this.setState({shopifyItemChanges: {}, shopifyItemChanged: shopify_sync_status.uptodate});
         // TODO: reload product!
       }
-    };
+    }.bind(this);
     xhr.open("POST", "https://ebay-sync.slirp.aaronbeekay.info/api/shopify/product?id=" + shopifyId );
     xhr.withCredentials = true;
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -132,7 +132,7 @@ class ShopifyUpdateButton extends Component {
         );
     } else if(state == shopify_sync_status.changed ) {   // 2 = changes to be synced
       return(
-        <button className="btn btn-outline-info" type="button" id="shopify-update-button">Write Shopify changes</button>
+        <button className="btn btn-outline-info" type="button" id="shopify-update-button" onClick={this.handleSyncButtonClick} >Write Shopify changes</button>
         );
     } else if(state == shopify_sync_status.syncing ) { // 3 = actively syncing changes
       return(
