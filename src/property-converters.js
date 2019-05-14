@@ -81,10 +81,10 @@ function shopify_desc_to_ebay_desc(shopifyItem, ebayProduct){
     if( 'offers' in ebayProduct && ebayProduct.offers.length > 0){
     	newProduct.offers = []
     	for( var i=0; i<ebayProduct.offers.length; i++){
-    		if('listingDescription' in ebayProduct.offers[i]){
+    		//if('listingDescription' in ebayProduct.offers[i]){
     			var offerId = ebayProduct.offers[i].offerId
     			newProduct.offers.push( {offerId: offerId, listingDescription: ebay_html} );	// Add the new description to each offer
-    		}
+    		//}
     	}
     } else {
     	newProduct.product.description = ebay_html
