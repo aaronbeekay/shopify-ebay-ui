@@ -1,31 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
+<!-- saved from url=(0074)file:///C:/Users/victo/Documents/shopify-ebay-ui/public/item-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="eBay Template">
         <meta name="author" content="Glitchlab">
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    </head>
+        <link rel="stylesheet" href="./item-template_files/bootstrap.min.css">
+    
+    	    		</head>
     <body>
         <div class="container">
-            <h3><span class="glyphicon glyphicon-barcode"></span> {{item_name}}</h3>
-            <h4><span class="glyphicon glyphicon-th-list"></span> Overview</h4>
+        <style>
+        #links {
+			float: right;
+			padding: 1em;
+			margin: 0;
+		}
+            </style>
+<div id="links">
+    <a class="btn btn-default" href="https://my.ebay.com/ws/eBayISAPI.dll?AcceptSavedSeller&amp;mode=0&amp;preference=0&amp;sellerid=glitch_lab" role="button">Add to Favorite Sellers</a>
+<a class="btn btn-default" href="https://feedback.ebay.com/ws/eBayISAPI.dll?ViewFeedback2&amp;userid=glitch_lab&amp;sspagename=VIP:feedback&amp;ftab=FeedbackAsSeller" role="button">Feedback</a>
+<a class="btn btn-default" href="https://contact.ebay.com/ws/eBayISAPI.dll?ReturnUserEmail&amp;requested=glitch_lab&amp;iid=190829457353&amp;redirect=0" role="button">Contact</a>
+    </div>
+    
+     <a href="https://www.ebay.com/str/glitchlabio"><img src="./item-template_files/GlitchLab_logo_red.png" width="260" height="60"></a>       
+        
+                      <div class="warranty" style="text-align: center;
+                    font-family: Verdana; font-weight: bold; color:
+                    rgb(0, 0, 0); margin-top: 6px;"><span style="display: inline-block; vertical-align:
+                      text-bottom; height: 30px;">Buy with confidence!</span>&nbsp;
+                    &nbsp;<span style="display: inline-block;
+                      vertical-align: text-bottom; height: 30px;">Will
+                      be shipped within 24 hours!</span>&nbsp; &nbsp;<span style="display: inline-block; vertical-align:
+                      text-bottom; height: 30px;">100% Satisfaction!</span>&nbsp;</div>
+
+   
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table class="table">
-                      <caption><p class="text-center">The following is an 'at-a-glance' summary of the item(s) available in this listing.</p></caption>
+                        <h2 class="text-center">{{item_name}}<p></p></h2><table class="table">
+                      
                         <tbody>
-                            <tr>
-                                <th class="text-right">Item:</th>
-                                <td>
-                                    {{item_name}}
-                                </td>
-                            </tr>
-                        {{#condition}}
                             <tr>
                                 <th class="text-right">Condition:</th>
                                 <td>
@@ -33,16 +50,39 @@
                                     {{#conditionUsed}}<span class="label label-primary">Used</span>{{/conditionUsed}}
                                 </td>
                             </tr>
-                        {{/condition}}
-                        </tbody>
+                            <tr>
+                                <th class="text-right">Description:</th>
+                                <td>
+                                    <p>{{{item_description}}}</p>
+                                </td>
+                            </tr>
+                            
+                            </tbody>
                     </table>
                 </div>
             </div>
-            <h4><span class="glyphicon glyphicon-list-alt"></span> Description</h4>
-            <p>{{{item_description}}}</p>
 
             <h3><span class="glyphicon glyphicon-comment"></span> Feedback</h3>
-            <p>We take our reputation seriously. If you are unsatisfied by your order, please contact us and we will work with you to resolve it to your satisfaction.</p>
-        </div> <!-- /container -->
-    </body>
-</html>
+            <ul>
+                <li>Our number one priority is your satisfaction from purchase to delivery.  If you have any questions or concerns please feel free to message us via eBay message system.  
+                    </li><li>We are open Monday - Friday 9am-5pm EST
+                </li></ul>
+    <h3><span class="glyphicon glyphicon-shopping-cart"> </span> Shipping and Returns</h3>
+    <ul>
+        <li>All orders are usually shipped the same or the next business day the payment is cleared.
+		</li><li>NO returns if item is modified or warranty sticker is removed. Liquid, misuse, accidental damage is also not covered.
+		</li><li>We inspect all returns for matching serial numbers, our unique marks, defects and damages.
+        </li><li>Free returns if an item is not as described or damaged. 
+        </li></ul>
+    <h3><span class="glyphicon glyphicon-heart"></span> Warranty </h3>
+    <ul>
+        <li>All our items have a <b>30 days money-back guarantee</b> unless specified otherwise in the item description.
+
+		</li><li>If you have a problem with your order, please contact us within 30 days of delivery.
+    	</li><li>If for any reason you are not satisfied with your purchase, please email us before leaving negative feedback!
+We can solve any problem!
+    </li></ul>
+</div> <!-- /container -->
+    
+
+</body></html>
