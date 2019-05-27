@@ -108,6 +108,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
     <script>
       function loadShopifyProduct(product_id){
+        
+        // Clear the eBay SKU input field
+        $('input#ebay-sku').val('');
+        
         var pid = product_id.toString();
         $.ajax({
           type: "GET",
